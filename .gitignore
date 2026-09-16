@@ -1,0 +1,10 @@
+/monolith/target/
+/data/
+/load-client/out/
+/mockserver/out/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.DS_Store
+__pycache__/
+/reports/*/client.log

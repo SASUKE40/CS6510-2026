@@ -1,3 +1,109 @@
+# Rust monolithic implementation
+
+The monolithic assignment implementation is in `monolith/`: one Axum/Tokio Rust
+process with embedded SQLite persistence. The original course client, mock
+server, and OpenAPI specification below are unchanged.
+
+## Assignment deliverables
+
+- [`ARCHITECTURE.md`](ARCHITECTURE.md): required quality attributes, measurable
+  requirements, three priorities, and explicit trade-offs.
+- [`reports/default/`](reports/default/): original JSON output from 10 stations
+  for 60 seconds.
+- [`reports/stress/`](reports/stress/): original JSON output from 100 stations
+  for 120 seconds.
+- [`reports/README.md`](reports/README.md): run environment, results, and validation.
+
+## Run the Rust backend
+
+Install a current stable Rust toolchain. SQLite is bundled by `rusqlite`; a
+separate SQLite installation or server is not needed.
+
+```bash
+cargo build --release --locked --manifest-path monolith/Cargo.toml
+mkdir -p data
+./monolith/target/release/checkout-monolith --db=data/checkout.sqlite
+```
+
+The server listens at `http://localhost:8080`. First startup seeds 2,000 items with
+10,000 units each. Later startups preserve data. To explicitly reinitialize this
+application's tables before another test, stop the server and run:
+
+```bash
+./monolith/target/release/checkout-monolith --db=data/checkout.sqlite --reset
+```
+
+`--help` lists port, database, catalog size, stock, low-stock threshold, window
+size, and slide interval options. Use the same settings when reopening an
+existing database; incompatible settings are rejected rather than silently
+mixing experiments. Database files and build outputs are git-ignored.
+
+## Interactive API documentation
+
+From the repository root, start the server with the documentation routes. If an
+older version is running, stop it with Ctrl+C first, then rebuild and restart:
+
+```bash
+mkdir -p data
+cargo run --release --locked --manifest-path monolith/Cargo.toml -- \
+  --db=data/checkout.sqlite
+```
+
+This preserves existing inventory and transactions. Then open:
+
+- [Swagger UI](http://localhost:8080/docs): interactive API documentation.
+- [Raw OpenAPI YAML](http://localhost:8080/openapi.yaml): the API specification.
+
+In Swagger UI, expand an endpoint, select **Try it out**, fill in any parameters
+or request body, and click **Execute**. For a checkout, start a transaction first,
+then use the returned `transactionId` to scan items and complete the purchase.
+These requests operate on the running server's database. Use your configured
+port in the links if you changed `--port`.
+
+The HTML and original YAML specification are embedded in the Rust binary at
+compile time. Swagger UI's JavaScript and CSS load from the pinned CDN version,
+so the interactive page requires internet access. Rebuild/restart the server
+after changing the specification. Integration follows the
+[Swagger UI standalone installation documentation](https://swagger.io/docs/open-source-tools/swagger-ui/usage/installation/).
+
+## Test and reproduce the submission
+
+The supplied client requires JDK 21+ (`java` and `javac` on `PATH`). The script
+also requires Python 3 and curl. With port 8080 free:
+
+```bash
+cargo test --locked --manifest-path monolith/Cargo.toml
+cargo clippy --locked --manifest-path monolith/Cargo.toml --all-targets -- -D warnings
+./scripts/load-tests.sh
+```
+
+The script builds release mode, rebuilds the unchanged client, and runs:
+
+```bash
+java -cp load-client/out Main --reportDir=reports/default
+java -cp load-client/out Main --stations=100 --duration=120 --reportDir=reports/stress
+```
+
+Each workload uses its own freshly reset database (`data/default.sqlite` and
+`data/stress.sqlite`). The client drains in-flight baskets at the deadline, so
+wall time can slightly exceed the requested duration. Reports retain their
+original timestamped names and are never edited to remove errors. The older
+files under `load-client/reports/` came with the starter and are not the Rust
+submission results.
+
+The script stops its server after each workload and checks database integrity,
+all 2,000 SKU stock-conservation equations, basket totals, persisted analytics,
+and agreement with the client totals. To repeat this check manually:
+
+```bash
+python3 scripts/verify_database.py data/default.sqlite reports/default/report-TIMESTAMP.json
+```
+
+See `ARCHITECTURE.md` for scan-based hopping-window semantics, shortage handling,
+and durability/scalability trade-offs. No real payment service is involved.
+
+---
+
 # Self-Checkout System — Semester Project
 
 A single API contract, to be implemented by a different
@@ -148,5 +254,4 @@ Submit the timestamped JSON report for each architecture in a
   the same hardware? 
 - Does the popular-items ranking stay stable across implementations (it
   should — it's testing the analytics feature, not the architecture)?
-
 
