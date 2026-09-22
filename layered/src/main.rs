@@ -33,10 +33,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     let store = Database::open(&path, config.clone(), reset)?;
     let listener = tokio::net::TcpListener::bind(("127.0.0.1", port)).await?;
-    println!(
-        "Rust layered checkout: http://{} database={path} {config:?}",
-        listener.local_addr()?
-    );
+    let addr = listener.local_addr()?;
+    println!("Rust layered checkout: http://{addr} database={path} {config:?}");
+    println!("API docs: http://{addr}/docs");
     axum::serve(listener, router(store))
         .with_graceful_shutdown(async {
             let _ = tokio::signal::ctrl_c().await;
