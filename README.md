@@ -1,3 +1,14 @@
+# Self-Checkout Supermarket assignments
+
+- **Assignment 2 — Layered architecture:** [`layered/`](layered/) contains the
+  implementation, run instructions, and both required load-test JSON reports.
+  Submit <https://github.com/SASUKE40/CS6510-2026/tree/main/layered>.
+- **Assignment 1 — Monolithic architecture:** [`monolith/`](monolith/),
+  [`ARCHITECTURE.md`](ARCHITECTURE.md), and [`reports/`](reports/).
+
+The instructions below describe Assignment 1. For the layered server, use the
+[Assignment 2 README](layered/README.md).
+
 # Rust monolithic implementation
 
 The monolithic assignment implementation is in `monolith/`: one Axum/Tokio Rust

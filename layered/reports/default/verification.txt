@@ -1,0 +1,4 @@
+PASS: SQLite integrity, foreign keys, inventory conservation for all 2000 SKUs, basket totals, and persisted hopping-window metadata/ranks
+Completed transactions: 15263; purchased units: 130839; accepted scans: 316544
+Latest window: 315501..316500; retained scans: 1000
+Out-of-stock SKUs: 1

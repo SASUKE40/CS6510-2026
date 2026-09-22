@@ -1,0 +1,1 @@
+Rust layered checkout: http://127.0.0.1:8081 database=layered/data/stress.sqlite Config { catalog_size: 2000, initial_stock: 10000, threshold: 50, window_size: 1000, slide_interval: 500 }
