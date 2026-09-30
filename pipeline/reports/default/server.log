@@ -1,0 +1,4 @@
+Rust pipeline checkout: http://127.0.0.1:8080 database=pipeline/data/default.sqlite Config { catalog_size: 2000, initial_stock: 10000, threshold: 50, window_size: 1000, slide_interval: 500 }
+Analytics pipeline: sequence -> journal -> window -> rank -> publish
+API docs: http://127.0.0.1:8080/docs
+Analytics pipeline drained and stopped

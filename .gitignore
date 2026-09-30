@@ -11,3 +11,6 @@ __pycache__/
 /layered/target/
 /layered/data/
 /layered/reports/*/client.log
+/pipeline/target/
+/pipeline/data/
+/pipeline/reports/*/client.log

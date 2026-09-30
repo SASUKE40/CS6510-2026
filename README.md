@@ -1,5 +1,9 @@
 # Self-Checkout Supermarket assignments
 
+- **Assignment 3 — Pipeline architecture:** [`pipeline/`](pipeline/) refactors the
+  popular-items hopping-window analytics into five filters connected by bounded
+  channels, and contains both required load-test JSON reports.
+  Submit <https://github.com/SASUKE40/CS6510-2026/tree/main/pipeline>.
 - **Assignment 2 — Layered architecture:** [`layered/`](layered/) contains the
   implementation, run instructions, and both required load-test JSON reports.
   Submit <https://github.com/SASUKE40/CS6510-2026/tree/main/layered>.

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Self-Checkout API</title>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui.css">
+</head>
+<body>
+  <div id="swagger-ui">Loading API documentation… (Swagger UI assets require internet access.)</div>
+  <noscript>Enable JavaScript to view Swagger UI. <a href="/openapi.yaml">Download the OpenAPI specification</a>.</noscript>
+  <script src="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui-bundle.js"></script>
+  <script>
+    SwaggerUIBundle({
+      url: "/openapi.yaml",
+      dom_id: "#swagger-ui",
+      deepLinking: true,
+      validatorUrl: null,
+      // The supplied spec names localhost:8080. Keep Try it out on this
+      // server even when it was started with a different --port value.
+      requestInterceptor: function (request) {
+        const url = new URL(request.url, window.location.origin);
+        if (url.origin === "http://localhost:8080") {
+          request.url = window.location.origin + url.pathname + url.search;
+        }
+        return request;
+      }
+    });
+  </script>
+</body>
+</html>
