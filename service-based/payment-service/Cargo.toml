@@ -1,0 +1,12 @@
+[package]
+name = "payment-service"
+version.workspace = true
+edition.workspace = true
+description = "Completes transactions: payment, all-or-nothing stock decrement, receipt"
+
+[dependencies]
+axum.workspace = true
+checkout-data.workspace = true
+serde_json.workspace = true
+service-kit.workspace = true
+tokio.workspace = true

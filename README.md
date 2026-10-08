@@ -1,5 +1,10 @@
 # Self-Checkout Supermarket assignments
 
+- **Assignment 4 — Service-based architecture:** [`service-based/`](service-based/)
+  splits the system into four separately deployable domain services (inventory,
+  basket, payment, analytics) that share one SQLite database, behind a
+  routing-only gateway. The directory contains both required load-test JSON reports.
+  Submit <https://github.com/SASUKE40/CS6510-2026/tree/main/service-based>.
 - **Assignment 3 — Pipeline architecture:** [`pipeline/`](pipeline/) refactors the
   popular-items hopping-window analytics into five filters connected by bounded
   channels, and contains both required load-test JSON reports.

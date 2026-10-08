@@ -1,0 +1,35 @@
+[workspace]
+resolver = "3"
+members = [
+    "data-access",
+    "service-kit",
+    "db-admin",
+    "inventory-service",
+    "basket-service",
+    "payment-service",
+    "analytics-service",
+    "gateway",
+    "system-tests",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+
+[workspace.dependencies]
+axum = "0.8"
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
+hyper = "1"
+hyper-util = { version = "0.1", features = ["client-legacy", "http1", "tokio"] }
+rusqlite = { version = "0.38", features = ["bundled"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "net", "signal", "time"] }
+tower = { version = "0.5", features = ["util"] }
+checkout-data = { path = "data-access" }
+service-kit = { path = "service-kit" }
+inventory-service = { path = "inventory-service" }
+basket-service = { path = "basket-service" }
+payment-service = { path = "payment-service" }
+analytics-service = { path = "analytics-service" }
+checkout-gateway = { path = "gateway" }

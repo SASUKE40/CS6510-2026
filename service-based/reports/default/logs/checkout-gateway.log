@@ -1,0 +1,3 @@
+checkout-gateway routes: Upstreams { inventory: "http://127.0.0.1:8081", basket: "http://127.0.0.1:8082", payment: "http://127.0.0.1:8083", analytics: "http://127.0.0.1:8084" }
+API docs: http://localhost:8080/docs
+checkout-gateway listening on http://127.0.0.1:8080

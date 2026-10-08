@@ -1,0 +1,13 @@
+[package]
+name = "checkout-gateway"
+version.workspace = true
+edition.workspace = true
+description = "Single client entry point that routes each request to the owning domain service"
+
+[dependencies]
+axum.workspace = true
+hyper.workspace = true
+hyper-util.workspace = true
+serde_json.workspace = true
+service-kit.workspace = true
+tokio.workspace = true

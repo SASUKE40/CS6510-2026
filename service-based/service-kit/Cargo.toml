@@ -1,0 +1,11 @@
+[package]
+name = "service-kit"
+version.workspace = true
+edition.workspace = true
+description = "Shared HTTP chassis for every checkout service: error mapping, CLI parsing, health, graceful shutdown"
+
+[dependencies]
+axum.workspace = true
+checkout-data.workspace = true
+serde_json.workspace = true
+tokio.workspace = true

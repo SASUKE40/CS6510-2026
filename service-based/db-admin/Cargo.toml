@@ -1,0 +1,9 @@
+[package]
+name = "checkout-db-admin"
+version.workspace = true
+edition.workspace = true
+description = "Creates, seeds, and resets the shared checkout database (schema owner)"
+
+[dependencies]
+checkout-data.workspace = true
+service-kit.workspace = true

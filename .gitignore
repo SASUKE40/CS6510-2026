@@ -14,3 +14,6 @@ __pycache__/
 /pipeline/target/
 /pipeline/data/
 /pipeline/reports/*/client.log
+/service-based/target/
+/service-based/data/
+/service-based/reports/*/client.log

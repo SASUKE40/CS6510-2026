@@ -1,0 +1,21 @@
+[package]
+name = "system-tests"
+version.workspace = true
+edition.workspace = true
+publish = false
+description = "Runs every service against one database file and exercises the API through the gateway"
+
+[dependencies]
+analytics-service.workspace = true
+axum.workspace = true
+basket-service.workspace = true
+checkout-data.workspace = true
+checkout-gateway.workspace = true
+inventory-service.workspace = true
+payment-service.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+tower.workspace = true
+
+[dev-dependencies]
+chrono.workspace = true

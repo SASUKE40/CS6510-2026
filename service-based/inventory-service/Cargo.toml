@@ -1,0 +1,13 @@
+[package]
+name = "inventory-service"
+version.workspace = true
+edition.workspace = true
+description = "Catalog and low-stock alerts"
+
+[dependencies]
+axum.workspace = true
+checkout-data.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+service-kit.workspace = true
+tokio.workspace = true

@@ -1,0 +1,13 @@
+[package]
+name = "analytics-service"
+version.workspace = true
+edition.workspace = true
+description = "Popular-items hopping-window analytics over the shared scan log"
+
+[dependencies]
+axum.workspace = true
+checkout-data.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+service-kit.workspace = true
+tokio.workspace = true

@@ -1,0 +1,10 @@
+[package]
+name = "checkout-data"
+version.workspace = true
+edition.workspace = true
+description = "Shared data-access library: the single SQLite schema and per-domain repositories used by every service"
+
+[dependencies]
+chrono.workspace = true
+rusqlite.workspace = true
+serde_json.workspace = true
