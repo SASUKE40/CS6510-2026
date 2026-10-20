@@ -1,0 +1,2 @@
+inventory-service: microservices/data/stress/inventory.sqlite Settings { catalog_size: 2000, initial_stock: 10000, threshold: 50 }
+inventory-service listening on http://127.0.0.1:8081

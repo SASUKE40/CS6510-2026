@@ -1,0 +1,13 @@
+[package]
+name = "payment-service"
+version.workspace = true
+edition.workspace = true
+description = "Completes transactions as an orchestrated saga across basket and inventory; owns payment.sqlite"
+
+[dependencies]
+axum.workspace = true
+chrono.workspace = true
+rusqlite.workspace = true
+serde_json.workspace = true
+service-kit.workspace = true
+tokio.workspace = true

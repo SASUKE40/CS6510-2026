@@ -1,0 +1,13 @@
+[package]
+name = "service-kit"
+version.workspace = true
+edition.workspace = true
+description = "Microservice chassis: JSON errors, CLI parsing, health, graceful shutdown, SQLite connection handling, and an inter-service JSON client. No schema, no domain types."
+
+[dependencies]
+axum.workspace = true
+chrono.workspace = true
+hyper-util.workspace = true
+rusqlite.workspace = true
+serde_json.workspace = true
+tokio.workspace = true

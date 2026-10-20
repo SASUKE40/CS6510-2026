@@ -1,5 +1,12 @@
 # Self-Checkout Supermarket assignments
 
+- **Assignment 5 — Microservices:** [`microservices/`](microservices/) makes
+  the four services independently deployable, each with its own SQLite
+  database. Checkout is an orchestrated saga (payment drives basket and
+  inventory, with compensations and crash recovery). Scans reach analytics by
+  choreography through a transactional outbox. A routing-only gateway sits in
+  front. The directory contains both required load-test JSON reports.
+  Submit <https://github.com/SASUKE40/CS6510-2026/tree/main/microservices>.
 - **Assignment 4 — Service-based architecture:** [`service-based/`](service-based/)
   splits the system into four separately deployable domain services (inventory,
   basket, payment, analytics) that share one SQLite database, behind a

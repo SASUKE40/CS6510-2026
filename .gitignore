@@ -17,3 +17,6 @@ __pycache__/
 /service-based/target/
 /service-based/data/
 /service-based/reports/*/client.log
+/microservices/target/
+/microservices/data/
+/microservices/reports/*/client.log

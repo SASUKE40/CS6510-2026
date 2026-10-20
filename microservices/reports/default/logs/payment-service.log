@@ -1,0 +1,3 @@
+payment-service orchestrates: Upstreams { basket: "http://127.0.0.1:8082", inventory: "http://127.0.0.1:8081" }
+payment-service: startup recovery settled 0 saga(s)
+payment-service listening on http://127.0.0.1:8083

@@ -1,0 +1,5 @@
+PASS: integrity and foreign keys in all 4 databases; inventory conservation for all 2000 SKUs; basket totals and catalog replica; every saga finished; completed baskets = completed sagas = active reservations = payments (per SKU and in cents); scan outbox = analytics cursor; hopping-window metadata/ranks
+Completed transactions: 20053; purchased units: 160767; accepted scans: 491601
+Aborted sagas by cause: {'INSUFFICIENT_STOCK': 26832}
+Latest window: 490501..491500; retained scans in analytics: 1101
+Out-of-stock SKUs: 2
