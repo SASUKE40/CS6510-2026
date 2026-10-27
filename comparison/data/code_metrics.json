@@ -1,0 +1,2272 @@
+[
+  {
+    "key": "monolith",
+    "label": "Monolith",
+    "size": {
+      "prod_loc": 499,
+      "test_loc": 318,
+      "prod_files": 2,
+      "crates": 1,
+      "deployables": 1,
+      "deployable_names": [
+        "checkout-monolith"
+      ],
+      "functions": 62,
+      "types": 7,
+      "direct_external_deps": 6,
+      "external_deps": [
+        "axum",
+        "chrono",
+        "rusqlite",
+        "serde",
+        "serde_json",
+        "tokio"
+      ],
+      "lockfile_packages": 93
+    },
+    "complexity": {
+      "cyclomatic_total": 215.0,
+      "cyclomatic_mean": 3.467741935483871,
+      "cyclomatic_max": 28.0,
+      "cognitive_total": 26.0,
+      "cognitive_mean": 0.41935483870967744,
+      "cognitive_max": 9.0,
+      "functions_cc_over_10": 4,
+      "mi_vs_weighted": 3.3866002065417637,
+      "mi_vs_min": 0.0,
+      "largest_file_sloc": 472.0,
+      "top_functions": [
+        {
+          "name": "Store::open",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/monolith/src/lib.rs",
+          "cyclomatic": 28.0,
+          "cognitive": 9.0,
+          "sloc": 74.0
+        },
+        {
+          "name": "Store::scan",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/monolith/src/lib.rs",
+          "cyclomatic": 26.0,
+          "cognitive": 1.0,
+          "sloc": 48.0
+        },
+        {
+          "name": "main",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/monolith/src/main.rs",
+          "cyclomatic": 22.0,
+          "cognitive": 7.0,
+          "sloc": 43.0
+        },
+        {
+          "name": "Store::complete",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/monolith/src/lib.rs",
+          "cyclomatic": 20.0,
+          "cognitive": 4.0,
+          "sloc": 54.0
+        },
+        {
+          "name": "Store::<anonymous>",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/monolith/src/lib.rs",
+          "cyclomatic": 6.0,
+          "cognitive": 0.0,
+          "sloc": 3.0
+        }
+      ]
+    },
+    "coupling": {
+      "modules": 2,
+      "edges": 1,
+      "mean_fan_out": 0.5,
+      "max_fan_out": 1,
+      "max_fan_in": 1,
+      "propagation_cost": 0.75,
+      "cross_crate_edges": 0,
+      "crates": {
+        "checkout-monolith": {
+          "files": 2,
+          "afferent": 0,
+          "efferent": 0,
+          "instability": 0.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 1
+        }
+      },
+      "rusqlite_modules": [
+        "src/lib.rs"
+      ],
+      "axum_modules": [
+        "src/lib.rs",
+        "src/main.rs"
+      ],
+      "rdkafka_modules": [],
+      "http_and_sql_modules": [
+        "src/lib.rs"
+      ],
+      "edge_list": [
+        [
+          "src/main.rs",
+          "src/lib.rs"
+        ]
+      ]
+    },
+    "cohesion": {
+      "lcom4_types": 1,
+      "lcom4_mean": 1.0,
+      "lcom4_cohesive_share": 1.0,
+      "lcom4_max": 1,
+      "lcom4": {
+        "monolith::Store": {
+          "methods": 6,
+          "lcom4": 1,
+          "file": "src/lib.rs"
+        }
+      },
+      "relational_cohesion_mean": 1.0
+    },
+    "data": {
+      "tables": 7,
+      "tables_total": 7,
+      "databases": 1,
+      "sql_modules": {
+        "src/lib.rs": {
+          "reads": [],
+          "writes": [
+            "items",
+            "lines",
+            "popularity",
+            "scans",
+            "settings",
+            "stock_changes",
+            "transactions"
+          ],
+          "domains": [
+            "analytics",
+            "basket",
+            "inventory"
+          ]
+        }
+      },
+      "mean_domains_per_sql_module": 3.0,
+      "deployables": {
+        "checkout-monolith": {
+          "reads": [],
+          "writes": [
+            "items",
+            "lines",
+            "popularity",
+            "scans",
+            "settings",
+            "stock_changes",
+            "transactions"
+          ],
+          "domains": [
+            "analytics",
+            "basket",
+            "inventory"
+          ],
+          "foreign_tables": [],
+          "foreign_writes": []
+        }
+      },
+      "tables_shared_by_deployables": [],
+      "tables_written_by_several": []
+    }
+  },
+  {
+    "key": "layered",
+    "label": "Layered",
+    "size": {
+      "prod_loc": 756,
+      "test_loc": 356,
+      "prod_files": 10,
+      "crates": 1,
+      "deployables": 1,
+      "deployable_names": [
+        "checkout-layered"
+      ],
+      "functions": 99,
+      "types": 18,
+      "direct_external_deps": 6,
+      "external_deps": [
+        "axum",
+        "chrono",
+        "rusqlite",
+        "serde",
+        "serde_json",
+        "tokio"
+      ],
+      "lockfile_packages": 93
+    },
+    "complexity": {
+      "cyclomatic_total": 346.0,
+      "cyclomatic_mean": 3.494949494949495,
+      "cyclomatic_max": 28.0,
+      "cognitive_total": 41.0,
+      "cognitive_mean": 0.41414141414141414,
+      "cognitive_max": 9.0,
+      "functions_cc_over_10": 4,
+      "mi_vs_weighted": 23.28036750875814,
+      "mi_vs_min": 5.031700634156509,
+      "largest_file_sloc": 257.0,
+      "top_functions": [
+        {
+          "name": "Database::open",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/layered/src/database.rs",
+          "cyclomatic": 28.0,
+          "cognitive": 9.0,
+          "sloc": 77.0
+        },
+        {
+          "name": "main",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/layered/src/main.rs",
+          "cyclomatic": 23.0,
+          "cognitive": 7.0,
+          "sloc": 42.0
+        },
+        {
+          "name": "Transactions::complete",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/layered/src/transactions.rs",
+          "cyclomatic": 12.0,
+          "cognitive": 7.0,
+          "sloc": 20.0
+        },
+        {
+          "name": "Transactions::scan",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/layered/src/transactions.rs",
+          "cyclomatic": 11.0,
+          "cognitive": 0.0,
+          "sloc": 12.0
+        },
+        {
+          "name": "Transactions::<anonymous>",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/layered/src/transactions.rs",
+          "cyclomatic": 10.0,
+          "cognitive": 7.0,
+          "sloc": 17.0
+        }
+      ]
+    },
+    "coupling": {
+      "modules": 10,
+      "edges": 23,
+      "mean_fan_out": 2.3,
+      "max_fan_out": 6,
+      "max_fan_in": 5,
+      "propagation_cost": 0.51,
+      "cross_crate_edges": 0,
+      "crates": {
+        "checkout-layered": {
+          "files": 10,
+          "afferent": 0,
+          "efferent": 0,
+          "instability": 0.0,
+          "relational_cohesion": 2.4,
+          "internal_edges": 23
+        }
+      },
+      "rusqlite_modules": [
+        "src/database.rs"
+      ],
+      "axum_modules": [
+        "src/api.rs",
+        "src/lib.rs",
+        "src/main.rs"
+      ],
+      "rdkafka_modules": [],
+      "http_and_sql_modules": [],
+      "edge_list": [
+        [
+          "src/analytics.rs",
+          "src/config.rs"
+        ],
+        [
+          "src/analytics.rs",
+          "src/database.rs"
+        ],
+        [
+          "src/analytics.rs",
+          "src/domain.rs"
+        ],
+        [
+          "src/analytics.rs",
+          "src/error.rs"
+        ],
+        [
+          "src/api.rs",
+          "src/error.rs"
+        ],
+        [
+          "src/api.rs",
+          "src/lib.rs"
+        ],
+        [
+          "src/database.rs",
+          "src/config.rs"
+        ],
+        [
+          "src/database.rs",
+          "src/domain.rs"
+        ],
+        [
+          "src/database.rs",
+          "src/error.rs"
+        ],
+        [
+          "src/inventory.rs",
+          "src/database.rs"
+        ],
+        [
+          "src/inventory.rs",
+          "src/domain.rs"
+        ],
+        [
+          "src/inventory.rs",
+          "src/error.rs"
+        ],
+        [
+          "src/lib.rs",
+          "src/analytics.rs"
+        ],
+        [
+          "src/lib.rs",
+          "src/api.rs"
+        ],
+        [
+          "src/lib.rs",
+          "src/config.rs"
+        ],
+        [
+          "src/lib.rs",
+          "src/database.rs"
+        ],
+        [
+          "src/lib.rs",
+          "src/inventory.rs"
+        ],
+        [
+          "src/lib.rs",
+          "src/transactions.rs"
+        ],
+        [
+          "src/main.rs",
+          "src/lib.rs"
+        ],
+        [
+          "src/transactions.rs",
+          "src/analytics.rs"
+        ],
+        [
+          "src/transactions.rs",
+          "src/database.rs"
+        ],
+        [
+          "src/transactions.rs",
+          "src/domain.rs"
+        ],
+        [
+          "src/transactions.rs",
+          "src/error.rs"
+        ]
+      ]
+    },
+    "cohesion": {
+      "lcom4_types": 5,
+      "lcom4_mean": 1.4,
+      "lcom4_cohesive_share": 0.6,
+      "lcom4_max": 2,
+      "lcom4": {
+        "layered::Analytics": {
+          "methods": 2,
+          "lcom4": 2,
+          "file": "src/analytics.rs"
+        },
+        "layered::Database": {
+          "methods": 3,
+          "lcom4": 2,
+          "file": "src/database.rs"
+        },
+        "layered::Inventory": {
+          "methods": 2,
+          "lcom4": 1,
+          "file": "src/inventory.rs"
+        },
+        "layered::Repository": {
+          "methods": 14,
+          "lcom4": 1,
+          "file": "src/database.rs"
+        },
+        "layered::Transactions": {
+          "methods": 4,
+          "lcom4": 1,
+          "file": "src/transactions.rs"
+        }
+      },
+      "relational_cohesion_mean": 2.4
+    },
+    "data": {
+      "tables": 7,
+      "tables_total": 7,
+      "databases": 1,
+      "sql_modules": {
+        "src/database.rs": {
+          "reads": [],
+          "writes": [
+            "items",
+            "lines",
+            "popularity",
+            "scans",
+            "settings",
+            "stock_changes",
+            "transactions"
+          ],
+          "domains": [
+            "analytics",
+            "basket",
+            "inventory"
+          ]
+        }
+      },
+      "mean_domains_per_sql_module": 3.0,
+      "deployables": {
+        "checkout-layered": {
+          "reads": [],
+          "writes": [
+            "items",
+            "lines",
+            "popularity",
+            "scans",
+            "settings",
+            "stock_changes",
+            "transactions"
+          ],
+          "domains": [
+            "analytics",
+            "basket",
+            "inventory"
+          ],
+          "foreign_tables": [],
+          "foreign_writes": []
+        }
+      },
+      "tables_shared_by_deployables": [],
+      "tables_written_by_several": []
+    }
+  },
+  {
+    "key": "pipeline",
+    "label": "Pipeline",
+    "size": {
+      "prod_loc": 1120,
+      "test_loc": 429,
+      "prod_files": 12,
+      "crates": 1,
+      "deployables": 1,
+      "deployable_names": [
+        "checkout-pipeline"
+      ],
+      "functions": 125,
+      "types": 29,
+      "direct_external_deps": 6,
+      "external_deps": [
+        "axum",
+        "chrono",
+        "rusqlite",
+        "serde",
+        "serde_json",
+        "tokio"
+      ],
+      "lockfile_packages": 93
+    },
+    "complexity": {
+      "cyclomatic_total": 425.0,
+      "cyclomatic_mean": 3.4,
+      "cyclomatic_max": 28.0,
+      "cognitive_total": 88.0,
+      "cognitive_mean": 0.704,
+      "cognitive_max": 14.0,
+      "functions_cc_over_10": 5,
+      "mi_vs_weighted": 22.822455059662968,
+      "mi_vs_min": 4.6339868927129055,
+      "largest_file_sloc": 263.0,
+      "top_functions": [
+        {
+          "name": "Database::open",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/pipeline/src/database.rs",
+          "cyclomatic": 28.0,
+          "cognitive": 9.0,
+          "sloc": 77.0
+        },
+        {
+          "name": "main",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/pipeline/src/main.rs",
+          "cyclomatic": 24.0,
+          "cognitive": 7.0,
+          "sloc": 46.0
+        },
+        {
+          "name": "Transactions::complete",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/pipeline/src/transactions.rs",
+          "cyclomatic": 12.0,
+          "cognitive": 7.0,
+          "sloc": 20.0
+        },
+        {
+          "name": "spawn_filter",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/pipeline/src/analytics/pipes.rs",
+          "cyclomatic": 11.0,
+          "cognitive": 14.0,
+          "sloc": 32.0
+        },
+        {
+          "name": "Transactions::scan",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/pipeline/src/transactions.rs",
+          "cyclomatic": 11.0,
+          "cognitive": 0.0,
+          "sloc": 13.0
+        }
+      ]
+    },
+    "coupling": {
+      "modules": 12,
+      "edges": 27,
+      "mean_fan_out": 2.25,
+      "max_fan_out": 6,
+      "max_fan_in": 5,
+      "propagation_cost": 0.4722222222222222,
+      "cross_crate_edges": 0,
+      "crates": {
+        "checkout-pipeline": {
+          "files": 12,
+          "afferent": 0,
+          "efferent": 0,
+          "instability": 0.0,
+          "relational_cohesion": 2.3333333333333335,
+          "internal_edges": 27
+        }
+      },
+      "rusqlite_modules": [
+        "src/database.rs"
+      ],
+      "axum_modules": [
+        "src/api.rs",
+        "src/lib.rs",
+        "src/main.rs"
+      ],
+      "rdkafka_modules": [],
+      "http_and_sql_modules": [],
+      "edge_list": [
+        [
+          "src/analytics/filters.rs",
+          "src/analytics/pipes.rs"
+        ],
+        [
+          "src/analytics/filters.rs",
+          "src/config.rs"
+        ],
+        [
+          "src/analytics/filters.rs",
+          "src/database.rs"
+        ],
+        [
+          "src/analytics/filters.rs",
+          "src/domain.rs"
+        ],
+        [
+          "src/analytics/mod.rs",
+          "src/analytics/filters.rs"
+        ],
+        [
+          "src/analytics/mod.rs",
+          "src/analytics/pipes.rs"
+        ],
+        [
+          "src/analytics/mod.rs",
+          "src/database.rs"
+        ],
+        [
+          "src/analytics/mod.rs",
+          "src/error.rs"
+        ],
+        [
+          "src/api.rs",
+          "src/error.rs"
+        ],
+        [
+          "src/api.rs",
+          "src/lib.rs"
+        ],
+        [
+          "src/database.rs",
+          "src/config.rs"
+        ],
+        [
+          "src/database.rs",
+          "src/domain.rs"
+        ],
+        [
+          "src/database.rs",
+          "src/error.rs"
+        ],
+        [
+          "src/inventory.rs",
+          "src/database.rs"
+        ],
+        [
+          "src/inventory.rs",
+          "src/domain.rs"
+        ],
+        [
+          "src/inventory.rs",
+          "src/error.rs"
+        ],
+        [
+          "src/lib.rs",
+          "src/analytics/mod.rs"
+        ],
+        [
+          "src/lib.rs",
+          "src/api.rs"
+        ],
+        [
+          "src/lib.rs",
+          "src/config.rs"
+        ],
+        [
+          "src/lib.rs",
+          "src/database.rs"
+        ],
+        [
+          "src/lib.rs",
+          "src/inventory.rs"
+        ],
+        [
+          "src/lib.rs",
+          "src/transactions.rs"
+        ],
+        [
+          "src/main.rs",
+          "src/lib.rs"
+        ],
+        [
+          "src/transactions.rs",
+          "src/analytics/mod.rs"
+        ],
+        [
+          "src/transactions.rs",
+          "src/database.rs"
+        ],
+        [
+          "src/transactions.rs",
+          "src/domain.rs"
+        ],
+        [
+          "src/transactions.rs",
+          "src/error.rs"
+        ]
+      ]
+    },
+    "cohesion": {
+      "lcom4_types": 5,
+      "lcom4_mean": 1.2,
+      "lcom4_cohesive_share": 0.8,
+      "lcom4_max": 2,
+      "lcom4": {
+        "pipeline::Analytics": {
+          "methods": 2,
+          "lcom4": 1,
+          "file": "src/analytics/mod.rs"
+        },
+        "pipeline::Database": {
+          "methods": 3,
+          "lcom4": 2,
+          "file": "src/database.rs"
+        },
+        "pipeline::Inventory": {
+          "methods": 2,
+          "lcom4": 1,
+          "file": "src/inventory.rs"
+        },
+        "pipeline::Repository": {
+          "methods": 14,
+          "lcom4": 1,
+          "file": "src/database.rs"
+        },
+        "pipeline::Transactions": {
+          "methods": 4,
+          "lcom4": 1,
+          "file": "src/transactions.rs"
+        }
+      },
+      "relational_cohesion_mean": 2.3333333333333335
+    },
+    "data": {
+      "tables": 7,
+      "tables_total": 7,
+      "databases": 1,
+      "sql_modules": {
+        "src/database.rs": {
+          "reads": [],
+          "writes": [
+            "items",
+            "lines",
+            "popularity",
+            "scans",
+            "settings",
+            "stock_changes",
+            "transactions"
+          ],
+          "domains": [
+            "analytics",
+            "basket",
+            "inventory"
+          ]
+        }
+      },
+      "mean_domains_per_sql_module": 3.0,
+      "deployables": {
+        "checkout-pipeline": {
+          "reads": [],
+          "writes": [
+            "items",
+            "lines",
+            "popularity",
+            "scans",
+            "settings",
+            "stock_changes",
+            "transactions"
+          ],
+          "domains": [
+            "analytics",
+            "basket",
+            "inventory"
+          ],
+          "foreign_tables": [],
+          "foreign_writes": []
+        }
+      },
+      "tables_shared_by_deployables": [],
+      "tables_written_by_several": []
+    }
+  },
+  {
+    "key": "service-based",
+    "label": "Service-based",
+    "size": {
+      "prod_loc": 1108,
+      "test_loc": 558,
+      "prod_files": 21,
+      "crates": 8,
+      "deployables": 6,
+      "deployable_names": [
+        "analytics-service",
+        "basket-service",
+        "checkout-db-admin",
+        "checkout-gateway",
+        "inventory-service",
+        "payment-service"
+      ],
+      "functions": 125,
+      "types": 19,
+      "direct_external_deps": 8,
+      "external_deps": [
+        "axum",
+        "chrono",
+        "hyper",
+        "hyper-util",
+        "rusqlite",
+        "serde",
+        "serde_json",
+        "tokio"
+      ],
+      "lockfile_packages": 103
+    },
+    "complexity": {
+      "cyclomatic_total": 449.0,
+      "cyclomatic_mean": 3.592,
+      "cyclomatic_max": 23.0,
+      "cognitive_total": 76.0,
+      "cognitive_mean": 0.608,
+      "cognitive_max": 13.0,
+      "functions_cc_over_10": 6,
+      "mi_vs_weighted": 32.817370275973225,
+      "mi_vs_min": 21.45049434800411,
+      "largest_file_sloc": 147.0,
+      "top_functions": [
+        {
+          "name": "initialize",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/service-based/data-access/src/admin.rs",
+          "cyclomatic": 23.0,
+          "cognitive": 9.0,
+          "sloc": 70.0
+        },
+        {
+          "name": "complete",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/service-based/payment-service/src/lib.rs",
+          "cyclomatic": 18.0,
+          "cognitive": 13.0,
+          "sloc": 56.0
+        },
+        {
+          "name": "scan",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/service-based/basket-service/src/lib.rs",
+          "cyclomatic": 13.0,
+          "cognitive": 3.0,
+          "sloc": 25.0
+        },
+        {
+          "name": "<anonymous>",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/service-based/payment-service/src/lib.rs",
+          "cyclomatic": 13.0,
+          "cognitive": 13.0,
+          "sloc": 41.0
+        },
+        {
+          "name": "<anonymous>",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/service-based/payment-service/src/lib.rs",
+          "cyclomatic": 12.0,
+          "cognitive": 13.0,
+          "sloc": 39.0
+        }
+      ]
+    },
+    "coupling": {
+      "modules": 21,
+      "edges": 45,
+      "mean_fan_out": 2.142857142857143,
+      "max_fan_out": 5,
+      "max_fan_in": 14,
+      "propagation_cost": 0.2834467120181406,
+      "cross_crate_edges": 30,
+      "crates": {
+        "analytics-service": {
+          "files": 2,
+          "afferent": 0,
+          "efferent": 2,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 1
+        },
+        "basket-service": {
+          "files": 2,
+          "afferent": 0,
+          "efferent": 2,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 1
+        },
+        "checkout-data": {
+          "files": 9,
+          "afferent": 6,
+          "efferent": 0,
+          "instability": 0.0,
+          "relational_cohesion": 1.2222222222222223,
+          "internal_edges": 10
+        },
+        "checkout-db-admin": {
+          "files": 1,
+          "afferent": 0,
+          "efferent": 2,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 0
+        },
+        "checkout-gateway": {
+          "files": 2,
+          "afferent": 0,
+          "efferent": 1,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 1
+        },
+        "inventory-service": {
+          "files": 2,
+          "afferent": 0,
+          "efferent": 2,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 1
+        },
+        "payment-service": {
+          "files": 2,
+          "afferent": 0,
+          "efferent": 2,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 1
+        },
+        "service-kit": {
+          "files": 1,
+          "afferent": 6,
+          "efferent": 1,
+          "instability": 0.14285714285714285,
+          "relational_cohesion": 1.0,
+          "internal_edges": 0
+        }
+      },
+      "rusqlite_modules": [
+        "data-access/src/admin.rs",
+        "data-access/src/baskets.rs",
+        "data-access/src/catalog.rs",
+        "data-access/src/error.rs",
+        "data-access/src/scans.rs",
+        "data-access/src/store.rs"
+      ],
+      "axum_modules": [
+        "analytics-service/src/lib.rs",
+        "basket-service/src/lib.rs",
+        "gateway/src/lib.rs",
+        "inventory-service/src/lib.rs",
+        "payment-service/src/lib.rs",
+        "service-kit/src/lib.rs"
+      ],
+      "rdkafka_modules": [],
+      "http_and_sql_modules": [],
+      "edge_list": [
+        [
+          "analytics-service/src/lib.rs",
+          "data-access/src/lib.rs"
+        ],
+        [
+          "analytics-service/src/lib.rs",
+          "data-access/src/popularity.rs"
+        ],
+        [
+          "analytics-service/src/lib.rs",
+          "data-access/src/scans.rs"
+        ],
+        [
+          "analytics-service/src/lib.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "analytics-service/src/main.rs",
+          "analytics-service/src/lib.rs"
+        ],
+        [
+          "analytics-service/src/main.rs",
+          "data-access/src/lib.rs"
+        ],
+        [
+          "analytics-service/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "basket-service/src/lib.rs",
+          "data-access/src/baskets.rs"
+        ],
+        [
+          "basket-service/src/lib.rs",
+          "data-access/src/catalog.rs"
+        ],
+        [
+          "basket-service/src/lib.rs",
+          "data-access/src/lib.rs"
+        ],
+        [
+          "basket-service/src/lib.rs",
+          "data-access/src/scans.rs"
+        ],
+        [
+          "basket-service/src/lib.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "basket-service/src/main.rs",
+          "basket-service/src/lib.rs"
+        ],
+        [
+          "basket-service/src/main.rs",
+          "data-access/src/lib.rs"
+        ],
+        [
+          "basket-service/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "data-access/src/admin.rs",
+          "data-access/src/domain.rs"
+        ],
+        [
+          "data-access/src/admin.rs",
+          "data-access/src/store.rs"
+        ],
+        [
+          "data-access/src/baskets.rs",
+          "data-access/src/lib.rs"
+        ],
+        [
+          "data-access/src/catalog.rs",
+          "data-access/src/lib.rs"
+        ],
+        [
+          "data-access/src/lib.rs",
+          "data-access/src/domain.rs"
+        ],
+        [
+          "data-access/src/lib.rs",
+          "data-access/src/error.rs"
+        ],
+        [
+          "data-access/src/lib.rs",
+          "data-access/src/store.rs"
+        ],
+        [
+          "data-access/src/popularity.rs",
+          "data-access/src/lib.rs"
+        ],
+        [
+          "data-access/src/scans.rs",
+          "data-access/src/lib.rs"
+        ],
+        [
+          "data-access/src/store.rs",
+          "data-access/src/error.rs"
+        ],
+        [
+          "db-admin/src/main.rs",
+          "data-access/src/admin.rs"
+        ],
+        [
+          "db-admin/src/main.rs",
+          "data-access/src/lib.rs"
+        ],
+        [
+          "db-admin/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "gateway/src/lib.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "gateway/src/main.rs",
+          "gateway/src/lib.rs"
+        ],
+        [
+          "gateway/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "inventory-service/src/lib.rs",
+          "data-access/src/catalog.rs"
+        ],
+        [
+          "inventory-service/src/lib.rs",
+          "data-access/src/lib.rs"
+        ],
+        [
+          "inventory-service/src/lib.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "inventory-service/src/main.rs",
+          "data-access/src/lib.rs"
+        ],
+        [
+          "inventory-service/src/main.rs",
+          "inventory-service/src/lib.rs"
+        ],
+        [
+          "inventory-service/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "payment-service/src/lib.rs",
+          "data-access/src/baskets.rs"
+        ],
+        [
+          "payment-service/src/lib.rs",
+          "data-access/src/catalog.rs"
+        ],
+        [
+          "payment-service/src/lib.rs",
+          "data-access/src/lib.rs"
+        ],
+        [
+          "payment-service/src/lib.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "payment-service/src/main.rs",
+          "data-access/src/lib.rs"
+        ],
+        [
+          "payment-service/src/main.rs",
+          "payment-service/src/lib.rs"
+        ],
+        [
+          "payment-service/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "service-kit/src/lib.rs",
+          "data-access/src/lib.rs"
+        ]
+      ]
+    },
+    "cohesion": {
+      "lcom4_types": 3,
+      "lcom4_mean": 1.3333333333333333,
+      "lcom4_cohesive_share": 0.6666666666666666,
+      "lcom4_max": 2,
+      "lcom4": {
+        "analytics-service::Analytics": {
+          "methods": 2,
+          "lcom4": 1,
+          "file": "analytics-service/src/lib.rs"
+        },
+        "data-access::Store": {
+          "methods": 3,
+          "lcom4": 2,
+          "file": "data-access/src/store.rs"
+        },
+        "service-kit::Args": {
+          "methods": 2,
+          "lcom4": 1,
+          "file": "service-kit/src/lib.rs"
+        }
+      },
+      "relational_cohesion_mean": 1.0277777777777777
+    },
+    "data": {
+      "tables": 7,
+      "tables_total": 7,
+      "databases": 1,
+      "sql_modules": {
+        "data-access/src/admin.rs": {
+          "reads": [],
+          "writes": [
+            "items",
+            "popularity",
+            "settings",
+            "stock_changes"
+          ],
+          "domains": [
+            "analytics",
+            "inventory"
+          ]
+        },
+        "data-access/src/baskets.rs": {
+          "reads": [
+            "items"
+          ],
+          "writes": [
+            "lines",
+            "transactions"
+          ],
+          "domains": [
+            "basket",
+            "inventory"
+          ]
+        },
+        "data-access/src/catalog.rs": {
+          "reads": [],
+          "writes": [
+            "items",
+            "stock_changes"
+          ],
+          "domains": [
+            "inventory"
+          ]
+        },
+        "data-access/src/popularity.rs": {
+          "reads": [],
+          "writes": [
+            "popularity"
+          ],
+          "domains": [
+            "analytics"
+          ]
+        },
+        "data-access/src/scans.rs": {
+          "reads": [
+            "items"
+          ],
+          "writes": [
+            "scans"
+          ],
+          "domains": [
+            "analytics",
+            "inventory"
+          ]
+        },
+        "data-access/src/store.rs": {
+          "reads": [
+            "settings"
+          ],
+          "writes": [],
+          "domains": []
+        }
+      },
+      "mean_domains_per_sql_module": 1.3333333333333333,
+      "deployables": {
+        "analytics-service": {
+          "reads": [
+            "items"
+          ],
+          "writes": [
+            "popularity",
+            "scans"
+          ],
+          "domains": [
+            "analytics",
+            "inventory"
+          ],
+          "foreign_tables": [
+            "items"
+          ],
+          "foreign_writes": []
+        },
+        "basket-service": {
+          "reads": [
+            "items"
+          ],
+          "writes": [
+            "lines",
+            "scans",
+            "transactions"
+          ],
+          "domains": [
+            "analytics",
+            "basket",
+            "inventory"
+          ],
+          "foreign_tables": [
+            "items",
+            "scans"
+          ],
+          "foreign_writes": [
+            "scans"
+          ]
+        },
+        "checkout-db-admin": {
+          "reads": [],
+          "writes": [
+            "items",
+            "popularity",
+            "settings",
+            "stock_changes"
+          ],
+          "domains": [
+            "analytics",
+            "inventory"
+          ],
+          "foreign_tables": [],
+          "foreign_writes": []
+        },
+        "inventory-service": {
+          "reads": [
+            "items",
+            "stock_changes"
+          ],
+          "writes": [],
+          "domains": [
+            "inventory"
+          ],
+          "foreign_tables": [],
+          "foreign_writes": []
+        },
+        "payment-service": {
+          "reads": [
+            "lines"
+          ],
+          "writes": [
+            "items",
+            "stock_changes",
+            "transactions"
+          ],
+          "domains": [
+            "basket",
+            "inventory"
+          ],
+          "foreign_tables": [
+            "items",
+            "lines",
+            "stock_changes",
+            "transactions"
+          ],
+          "foreign_writes": [
+            "items",
+            "stock_changes",
+            "transactions"
+          ]
+        }
+      },
+      "tables_shared_by_deployables": [
+        "items",
+        "lines",
+        "scans",
+        "stock_changes",
+        "transactions"
+      ],
+      "tables_written_by_several": [
+        "scans",
+        "transactions"
+      ]
+    }
+  },
+  {
+    "key": "microservices",
+    "label": "Microservices",
+    "size": {
+      "prod_loc": 2132,
+      "test_loc": 1030,
+      "prod_files": 18,
+      "crates": 6,
+      "deployables": 5,
+      "deployable_names": [
+        "analytics-service",
+        "basket-service",
+        "checkout-gateway",
+        "inventory-service",
+        "payment-service"
+      ],
+      "functions": 248,
+      "types": 38,
+      "direct_external_deps": 8,
+      "external_deps": [
+        "axum",
+        "chrono",
+        "hyper",
+        "hyper-util",
+        "rusqlite",
+        "serde",
+        "serde_json",
+        "tokio"
+      ],
+      "lockfile_packages": 101
+    },
+    "complexity": {
+      "cyclomatic_total": 1021.0,
+      "cyclomatic_mean": 4.116935483870968,
+      "cyclomatic_max": 24.0,
+      "cognitive_total": 238.0,
+      "cognitive_mean": 0.9596774193548387,
+      "cognitive_max": 15.0,
+      "functions_cc_over_10": 21,
+      "mi_vs_weighted": 17.44566113755382,
+      "mi_vs_min": 5.8467424276891595,
+      "largest_file_sloc": 345.0,
+      "top_functions": [
+        {
+          "name": "Store::ingest",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/microservices/analytics-service/src/store.rs",
+          "cyclomatic": 24.0,
+          "cognitive": 10.0,
+          "sloc": 54.0
+        },
+        {
+          "name": "Payment::complete",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/microservices/payment-service/src/lib.rs",
+          "cyclomatic": 24.0,
+          "cognitive": 4.0,
+          "sloc": 92.0
+        },
+        {
+          "name": "Store::<anonymous>",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/microservices/analytics-service/src/store.rs",
+          "cyclomatic": 23.0,
+          "cognitive": 10.0,
+          "sloc": 48.0
+        },
+        {
+          "name": "Store::reserve",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/microservices/inventory-service/src/store.rs",
+          "cyclomatic": 23.0,
+          "cognitive": 15.0,
+          "sloc": 54.0
+        },
+        {
+          "name": "Store::open",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/microservices/analytics-service/src/store.rs",
+          "cyclomatic": 20.0,
+          "cognitive": 6.0,
+          "sloc": 51.0
+        }
+      ]
+    },
+    "coupling": {
+      "modules": 18,
+      "edges": 31,
+      "mean_fan_out": 1.7222222222222223,
+      "max_fan_out": 2,
+      "max_fan_in": 14,
+      "propagation_cost": 0.27469135802469136,
+      "cross_crate_edges": 18,
+      "crates": {
+        "analytics-service": {
+          "files": 3,
+          "afferent": 0,
+          "efferent": 1,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 2
+        },
+        "basket-service": {
+          "files": 3,
+          "afferent": 0,
+          "efferent": 1,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 2
+        },
+        "checkout-gateway": {
+          "files": 2,
+          "afferent": 0,
+          "efferent": 1,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 1
+        },
+        "inventory-service": {
+          "files": 3,
+          "afferent": 0,
+          "efferent": 1,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 2
+        },
+        "payment-service": {
+          "files": 3,
+          "afferent": 0,
+          "efferent": 1,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 2
+        },
+        "service-kit": {
+          "files": 4,
+          "afferent": 5,
+          "efferent": 0,
+          "instability": 0.0,
+          "relational_cohesion": 1.25,
+          "internal_edges": 4
+        }
+      },
+      "rusqlite_modules": [
+        "analytics-service/src/store.rs",
+        "basket-service/src/store.rs",
+        "inventory-service/src/store.rs",
+        "payment-service/src/store.rs",
+        "service-kit/src/error.rs",
+        "service-kit/src/sqlite.rs"
+      ],
+      "axum_modules": [
+        "analytics-service/src/lib.rs",
+        "basket-service/src/lib.rs",
+        "gateway/src/lib.rs",
+        "inventory-service/src/lib.rs",
+        "payment-service/src/lib.rs",
+        "service-kit/src/client.rs",
+        "service-kit/src/error.rs",
+        "service-kit/src/lib.rs"
+      ],
+      "rdkafka_modules": [],
+      "http_and_sql_modules": [
+        "service-kit/src/error.rs"
+      ],
+      "edge_list": [
+        [
+          "analytics-service/src/lib.rs",
+          "analytics-service/src/store.rs"
+        ],
+        [
+          "analytics-service/src/lib.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "analytics-service/src/main.rs",
+          "analytics-service/src/lib.rs"
+        ],
+        [
+          "analytics-service/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "analytics-service/src/store.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "analytics-service/src/store.rs",
+          "service-kit/src/sqlite.rs"
+        ],
+        [
+          "basket-service/src/lib.rs",
+          "basket-service/src/store.rs"
+        ],
+        [
+          "basket-service/src/lib.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "basket-service/src/main.rs",
+          "basket-service/src/lib.rs"
+        ],
+        [
+          "basket-service/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "basket-service/src/store.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "basket-service/src/store.rs",
+          "service-kit/src/sqlite.rs"
+        ],
+        [
+          "gateway/src/lib.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "gateway/src/main.rs",
+          "gateway/src/lib.rs"
+        ],
+        [
+          "gateway/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "inventory-service/src/lib.rs",
+          "inventory-service/src/store.rs"
+        ],
+        [
+          "inventory-service/src/lib.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "inventory-service/src/main.rs",
+          "inventory-service/src/lib.rs"
+        ],
+        [
+          "inventory-service/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "inventory-service/src/store.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "inventory-service/src/store.rs",
+          "service-kit/src/sqlite.rs"
+        ],
+        [
+          "payment-service/src/lib.rs",
+          "payment-service/src/store.rs"
+        ],
+        [
+          "payment-service/src/lib.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "payment-service/src/main.rs",
+          "payment-service/src/lib.rs"
+        ],
+        [
+          "payment-service/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "payment-service/src/store.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "payment-service/src/store.rs",
+          "service-kit/src/sqlite.rs"
+        ],
+        [
+          "service-kit/src/client.rs",
+          "service-kit/src/error.rs"
+        ],
+        [
+          "service-kit/src/lib.rs",
+          "service-kit/src/client.rs"
+        ],
+        [
+          "service-kit/src/lib.rs",
+          "service-kit/src/error.rs"
+        ],
+        [
+          "service-kit/src/sqlite.rs",
+          "service-kit/src/error.rs"
+        ]
+      ]
+    },
+    "cohesion": {
+      "lcom4_types": 11,
+      "lcom4_mean": 1.1818181818181819,
+      "lcom4_cohesive_share": 0.8181818181818182,
+      "lcom4_max": 2,
+      "lcom4": {
+        "analytics-service::Analytics": {
+          "methods": 4,
+          "lcom4": 1,
+          "file": "analytics-service/src/lib.rs"
+        },
+        "analytics-service::Store": {
+          "methods": 5,
+          "lcom4": 1,
+          "file": "analytics-service/src/store.rs"
+        },
+        "basket-service::Store": {
+          "methods": 9,
+          "lcom4": 1,
+          "file": "basket-service/src/store.rs"
+        },
+        "inventory-service::Store": {
+          "methods": 5,
+          "lcom4": 2,
+          "file": "inventory-service/src/store.rs"
+        },
+        "payment-service::Payment": {
+          "methods": 10,
+          "lcom4": 1,
+          "file": "payment-service/src/lib.rs"
+        },
+        "payment-service::Store": {
+          "methods": 8,
+          "lcom4": 1,
+          "file": "payment-service/src/store.rs"
+        },
+        "service-kit::Args": {
+          "methods": 2,
+          "lcom4": 1,
+          "file": "service-kit/src/lib.rs"
+        },
+        "service-kit::Database": {
+          "methods": 2,
+          "lcom4": 2,
+          "file": "service-kit/src/sqlite.rs"
+        },
+        "service-kit::HttpClient": {
+          "methods": 3,
+          "lcom4": 1,
+          "file": "service-kit/src/client.rs"
+        },
+        "service-kit::Outcome": {
+          "methods": 2,
+          "lcom4": 1,
+          "file": "service-kit/src/sqlite.rs"
+        },
+        "service-kit::Reply": {
+          "methods": 2,
+          "lcom4": 1,
+          "file": "service-kit/src/client.rs"
+        }
+      },
+      "relational_cohesion_mean": 1.0416666666666667
+    },
+    "data": {
+      "tables": 15,
+      "tables_total": 16,
+      "databases": 4,
+      "sql_modules": {
+        "analytics-service/src/store.rs": {
+          "reads": [],
+          "writes": [
+            "analytics-service.cursor",
+            "analytics-service.popularity",
+            "analytics-service.scans",
+            "analytics-service.settings"
+          ],
+          "domains": [
+            "analytics"
+          ]
+        },
+        "basket-service/src/store.rs": {
+          "reads": [],
+          "writes": [
+            "basket-service.catalog",
+            "basket-service.lines",
+            "basket-service.released_sagas",
+            "basket-service.scan_events",
+            "basket-service.transactions"
+          ],
+          "domains": [
+            "basket"
+          ]
+        },
+        "inventory-service/src/store.rs": {
+          "reads": [],
+          "writes": [
+            "inventory-service.items",
+            "inventory-service.reservation_lines",
+            "inventory-service.reservations",
+            "inventory-service.settings",
+            "inventory-service.stock_changes"
+          ],
+          "domains": [
+            "inventory"
+          ]
+        },
+        "payment-service/src/store.rs": {
+          "reads": [],
+          "writes": [
+            "payment-service.payments",
+            "payment-service.sagas"
+          ],
+          "domains": [
+            "payment"
+          ]
+        }
+      },
+      "mean_domains_per_sql_module": 1.0,
+      "deployables": {
+        "analytics-service": {
+          "reads": [],
+          "writes": [
+            "analytics-service.cursor",
+            "analytics-service.popularity",
+            "analytics-service.scans",
+            "analytics-service.settings"
+          ],
+          "domains": [
+            "analytics"
+          ],
+          "foreign_tables": [],
+          "foreign_writes": []
+        },
+        "basket-service": {
+          "reads": [],
+          "writes": [
+            "basket-service.catalog",
+            "basket-service.lines",
+            "basket-service.released_sagas",
+            "basket-service.scan_events",
+            "basket-service.transactions"
+          ],
+          "domains": [
+            "basket"
+          ],
+          "foreign_tables": [],
+          "foreign_writes": []
+        },
+        "inventory-service": {
+          "reads": [],
+          "writes": [
+            "inventory-service.items",
+            "inventory-service.reservation_lines",
+            "inventory-service.reservations",
+            "inventory-service.settings",
+            "inventory-service.stock_changes"
+          ],
+          "domains": [
+            "inventory"
+          ],
+          "foreign_tables": [],
+          "foreign_writes": []
+        },
+        "payment-service": {
+          "reads": [],
+          "writes": [
+            "payment-service.payments",
+            "payment-service.sagas"
+          ],
+          "domains": [
+            "payment"
+          ],
+          "foreign_tables": [],
+          "foreign_writes": []
+        }
+      },
+      "tables_shared_by_deployables": [],
+      "tables_written_by_several": []
+    }
+  },
+  {
+    "key": "event-based",
+    "label": "Event-based",
+    "size": {
+      "prod_loc": 2884,
+      "test_loc": 1158,
+      "prod_files": 18,
+      "crates": 6,
+      "deployables": 5,
+      "deployable_names": [
+        "analytics-service",
+        "basket-service",
+        "checkout-gateway",
+        "inventory-service",
+        "payment-service"
+      ],
+      "functions": 355,
+      "types": 39,
+      "direct_external_deps": 9,
+      "external_deps": [
+        "axum",
+        "chrono",
+        "hyper",
+        "hyper-util",
+        "rdkafka",
+        "rusqlite",
+        "serde",
+        "serde_json",
+        "tokio"
+      ],
+      "lockfile_packages": 114
+    },
+    "complexity": {
+      "cyclomatic_total": 1361.0,
+      "cyclomatic_mean": 3.8338028169014087,
+      "cyclomatic_max": 40.0,
+      "cognitive_total": 327.0,
+      "cognitive_mean": 0.9211267605633803,
+      "cognitive_max": 19.0,
+      "functions_cc_over_10": 31,
+      "mi_vs_weighted": 10.812345866493335,
+      "mi_vs_min": 0.0,
+      "largest_file_sloc": 543.0,
+      "top_functions": [
+        {
+          "name": "Payment::on_event",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/event-based/payment-service/src/lib.rs",
+          "cyclomatic": 40.0,
+          "cognitive": 9.0,
+          "sloc": 81.0
+        },
+        {
+          "name": "Store::reserve",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/event-based/inventory-service/src/store.rs",
+          "cyclomatic": 34.0,
+          "cognitive": 15.0,
+          "sloc": 62.0
+        },
+        {
+          "name": "handle",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/event-based/basket-service/src/lib.rs",
+          "cyclomatic": 33.0,
+          "cognitive": 10.0,
+          "sloc": 76.0
+        },
+        {
+          "name": "Store::<anonymous>",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/event-based/inventory-service/src/store.rs",
+          "cyclomatic": 28.0,
+          "cognitive": 12.0,
+          "sloc": 46.0
+        },
+        {
+          "name": "Store::ingest",
+          "file": "/Users/edward/code/SASUKE40/CS6510-2026/event-based/analytics-service/src/store.rs",
+          "cyclomatic": 24.0,
+          "cognitive": 10.0,
+          "sloc": 55.0
+        }
+      ]
+    },
+    "coupling": {
+      "modules": 18,
+      "edges": 35,
+      "mean_fan_out": 1.9444444444444444,
+      "max_fan_out": 3,
+      "max_fan_in": 14,
+      "propagation_cost": 0.27469135802469136,
+      "cross_crate_edges": 22,
+      "crates": {
+        "analytics-service": {
+          "files": 3,
+          "afferent": 0,
+          "efferent": 1,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 2
+        },
+        "basket-service": {
+          "files": 3,
+          "afferent": 0,
+          "efferent": 1,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 2
+        },
+        "checkout-gateway": {
+          "files": 2,
+          "afferent": 0,
+          "efferent": 1,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 1
+        },
+        "inventory-service": {
+          "files": 3,
+          "afferent": 0,
+          "efferent": 1,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 2
+        },
+        "payment-service": {
+          "files": 3,
+          "afferent": 0,
+          "efferent": 1,
+          "instability": 1.0,
+          "relational_cohesion": 1.0,
+          "internal_edges": 2
+        },
+        "service-kit": {
+          "files": 4,
+          "afferent": 5,
+          "efferent": 0,
+          "instability": 0.0,
+          "relational_cohesion": 1.25,
+          "internal_edges": 4
+        }
+      },
+      "rusqlite_modules": [
+        "analytics-service/src/store.rs",
+        "basket-service/src/store.rs",
+        "inventory-service/src/store.rs",
+        "payment-service/src/store.rs",
+        "service-kit/src/error.rs",
+        "service-kit/src/sqlite.rs"
+      ],
+      "axum_modules": [
+        "analytics-service/src/lib.rs",
+        "basket-service/src/lib.rs",
+        "gateway/src/lib.rs",
+        "inventory-service/src/lib.rs",
+        "payment-service/src/lib.rs",
+        "service-kit/src/error.rs",
+        "service-kit/src/lib.rs"
+      ],
+      "rdkafka_modules": [
+        "service-kit/src/bus.rs"
+      ],
+      "http_and_sql_modules": [
+        "service-kit/src/error.rs"
+      ],
+      "edge_list": [
+        [
+          "analytics-service/src/lib.rs",
+          "analytics-service/src/store.rs"
+        ],
+        [
+          "analytics-service/src/lib.rs",
+          "service-kit/src/bus.rs"
+        ],
+        [
+          "analytics-service/src/lib.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "analytics-service/src/main.rs",
+          "analytics-service/src/lib.rs"
+        ],
+        [
+          "analytics-service/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "analytics-service/src/store.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "analytics-service/src/store.rs",
+          "service-kit/src/sqlite.rs"
+        ],
+        [
+          "basket-service/src/lib.rs",
+          "basket-service/src/store.rs"
+        ],
+        [
+          "basket-service/src/lib.rs",
+          "service-kit/src/bus.rs"
+        ],
+        [
+          "basket-service/src/lib.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "basket-service/src/main.rs",
+          "basket-service/src/lib.rs"
+        ],
+        [
+          "basket-service/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "basket-service/src/store.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "basket-service/src/store.rs",
+          "service-kit/src/sqlite.rs"
+        ],
+        [
+          "gateway/src/lib.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "gateway/src/main.rs",
+          "gateway/src/lib.rs"
+        ],
+        [
+          "gateway/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "inventory-service/src/lib.rs",
+          "inventory-service/src/store.rs"
+        ],
+        [
+          "inventory-service/src/lib.rs",
+          "service-kit/src/bus.rs"
+        ],
+        [
+          "inventory-service/src/lib.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "inventory-service/src/main.rs",
+          "inventory-service/src/lib.rs"
+        ],
+        [
+          "inventory-service/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "inventory-service/src/store.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "inventory-service/src/store.rs",
+          "service-kit/src/sqlite.rs"
+        ],
+        [
+          "payment-service/src/lib.rs",
+          "payment-service/src/store.rs"
+        ],
+        [
+          "payment-service/src/lib.rs",
+          "service-kit/src/bus.rs"
+        ],
+        [
+          "payment-service/src/lib.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "payment-service/src/main.rs",
+          "payment-service/src/lib.rs"
+        ],
+        [
+          "payment-service/src/main.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "payment-service/src/store.rs",
+          "service-kit/src/lib.rs"
+        ],
+        [
+          "payment-service/src/store.rs",
+          "service-kit/src/sqlite.rs"
+        ],
+        [
+          "service-kit/src/bus.rs",
+          "service-kit/src/error.rs"
+        ],
+        [
+          "service-kit/src/lib.rs",
+          "service-kit/src/bus.rs"
+        ],
+        [
+          "service-kit/src/lib.rs",
+          "service-kit/src/error.rs"
+        ],
+        [
+          "service-kit/src/sqlite.rs",
+          "service-kit/src/error.rs"
+        ]
+      ]
+    },
+    "cohesion": {
+      "lcom4_types": 13,
+      "lcom4_mean": 1.1538461538461537,
+      "lcom4_cohesive_share": 0.8461538461538461,
+      "lcom4_max": 2,
+      "lcom4": {
+        "analytics-service::Analytics": {
+          "methods": 7,
+          "lcom4": 1,
+          "file": "analytics-service/src/lib.rs"
+        },
+        "analytics-service::Store": {
+          "methods": 5,
+          "lcom4": 1,
+          "file": "analytics-service/src/store.rs"
+        },
+        "basket-service::Relay": {
+          "methods": 3,
+          "lcom4": 1,
+          "file": "basket-service/src/lib.rs"
+        },
+        "basket-service::Store": {
+          "methods": 10,
+          "lcom4": 1,
+          "file": "basket-service/src/store.rs"
+        },
+        "inventory-service::Store": {
+          "methods": 5,
+          "lcom4": 2,
+          "file": "inventory-service/src/store.rs"
+        },
+        "payment-service::Payment": {
+          "methods": 7,
+          "lcom4": 1,
+          "file": "payment-service/src/lib.rs"
+        },
+        "payment-service::Store": {
+          "methods": 10,
+          "lcom4": 1,
+          "file": "payment-service/src/store.rs"
+        },
+        "service-kit::Args": {
+          "methods": 2,
+          "lcom4": 1,
+          "file": "service-kit/src/lib.rs"
+        },
+        "service-kit::Bus": {
+          "methods": 12,
+          "lcom4": 1,
+          "file": "service-kit/src/bus.rs"
+        },
+        "service-kit::Consumer": {
+          "methods": 6,
+          "lcom4": 1,
+          "file": "service-kit/src/bus.rs"
+        },
+        "service-kit::Database": {
+          "methods": 2,
+          "lcom4": 2,
+          "file": "service-kit/src/sqlite.rs"
+        },
+        "service-kit::Error": {
+          "methods": 3,
+          "lcom4": 1,
+          "file": "service-kit/src/error.rs"
+        },
+        "service-kit::Outcome": {
+          "methods": 2,
+          "lcom4": 1,
+          "file": "service-kit/src/sqlite.rs"
+        }
+      },
+      "relational_cohesion_mean": 1.0416666666666667
+    },
+    "data": {
+      "tables": 15,
+      "tables_total": 16,
+      "databases": 4,
+      "sql_modules": {
+        "analytics-service/src/store.rs": {
+          "reads": [],
+          "writes": [
+            "analytics-service.cursor",
+            "analytics-service.popularity",
+            "analytics-service.scans",
+            "analytics-service.settings"
+          ],
+          "domains": [
+            "analytics"
+          ]
+        },
+        "basket-service/src/store.rs": {
+          "reads": [],
+          "writes": [
+            "basket-service.catalog",
+            "basket-service.lines",
+            "basket-service.released_sagas",
+            "basket-service.scan_events",
+            "basket-service.transactions"
+          ],
+          "domains": [
+            "basket"
+          ]
+        },
+        "inventory-service/src/store.rs": {
+          "reads": [],
+          "writes": [
+            "inventory-service.items",
+            "inventory-service.reservation_lines",
+            "inventory-service.reservations",
+            "inventory-service.settings",
+            "inventory-service.stock_changes"
+          ],
+          "domains": [
+            "inventory"
+          ]
+        },
+        "payment-service/src/store.rs": {
+          "reads": [],
+          "writes": [
+            "payment-service.payments",
+            "payment-service.sagas"
+          ],
+          "domains": [
+            "payment"
+          ]
+        }
+      },
+      "mean_domains_per_sql_module": 1.0,
+      "deployables": {
+        "analytics-service": {
+          "reads": [],
+          "writes": [
+            "analytics-service.cursor",
+            "analytics-service.popularity",
+            "analytics-service.scans",
+            "analytics-service.settings"
+          ],
+          "domains": [
+            "analytics"
+          ],
+          "foreign_tables": [],
+          "foreign_writes": []
+        },
+        "basket-service": {
+          "reads": [],
+          "writes": [
+            "basket-service.catalog",
+            "basket-service.lines",
+            "basket-service.released_sagas",
+            "basket-service.scan_events",
+            "basket-service.transactions"
+          ],
+          "domains": [
+            "basket"
+          ],
+          "foreign_tables": [],
+          "foreign_writes": []
+        },
+        "inventory-service": {
+          "reads": [],
+          "writes": [
+            "inventory-service.items",
+            "inventory-service.reservation_lines",
+            "inventory-service.reservations",
+            "inventory-service.settings",
+            "inventory-service.stock_changes"
+          ],
+          "domains": [
+            "inventory"
+          ],
+          "foreign_tables": [],
+          "foreign_writes": []
+        },
+        "payment-service": {
+          "reads": [],
+          "writes": [
+            "payment-service.payments",
+            "payment-service.sagas"
+          ],
+          "domains": [
+            "payment"
+          ],
+          "foreign_tables": [],
+          "foreign_writes": []
+        }
+      },
+      "tables_shared_by_deployables": [],
+      "tables_written_by_several": []
+    }
+  }
+]

@@ -1,0 +1,590 @@
+{
+  "monolith": {
+    "default": {
+      "file": "reports/default/report-20260915-200422.json",
+      "stations": 10,
+      "wall_s": 60.022344417,
+      "tx_per_s": 255.38822498340136,
+      "scans_per_s": 5326.716293831499,
+      "completed": 15329,
+      "scans": 319722,
+      "ops": {
+        "START_TRANSACTION": {
+          "successCount": 30453,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 1.556502027025252,
+          "p50Ms": 1.372041,
+          "p95Ms": 3.056,
+          "p99Ms": 4.616542,
+          "maxMs": 190.2435
+        },
+        "SCAN_ITEM": {
+          "successCount": 319722,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 1.5726475728914495,
+          "p50Ms": 1.4125,
+          "p95Ms": 3.094,
+          "p99Ms": 4.571833,
+          "maxMs": 210.964292
+        },
+        "COMPLETE_TRANSACTION": {
+          "successCount": 15329,
+          "errorCount": 15124,
+          "errorRate": 0.49663415755426393,
+          "meanMs": 1.7839245322591166,
+          "p50Ms": 1.61625,
+          "p95Ms": 3.512583,
+          "p99Ms": 4.902583,
+          "maxMs": 66.438125
+        }
+      },
+      "requests_per_s": 6341.438404265255,
+      "mean_success_ms": 1.5801631792921556,
+      "top3": [
+        "SKU-000001",
+        "SKU-000002",
+        "SKU-000003"
+      ]
+    },
+    "stress": {
+      "file": "reports/stress/report-20260915-200624.json",
+      "stations": 100,
+      "wall_s": 120.103517875,
+      "tx_per_s": 194.43227320205588,
+      "scans_per_s": 5397.343986831993,
+      "completed": 23352,
+      "scans": 648240,
+      "ops": {
+        "START_TRANSACTION": {
+          "successCount": 61862,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 15.7247154625295,
+          "p50Ms": 15.116667,
+          "p95Ms": 31.340708,
+          "p99Ms": 47.069541,
+          "maxMs": 296.8195
+        },
+        "SCAN_ITEM": {
+          "successCount": 648240,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 15.545584151399172,
+          "p50Ms": 15.112875,
+          "p95Ms": 31.350125,
+          "p99Ms": 45.749542,
+          "maxMs": 308.122583
+        },
+        "COMPLETE_TRANSACTION": {
+          "successCount": 23352,
+          "errorCount": 38510,
+          "errorRate": 0.6225146293362646,
+          "meanMs": 16.07996042488866,
+          "p50Ms": 15.668375,
+          "p95Ms": 31.841791,
+          "p99Ms": 48.742,
+          "maxMs": 314.012667
+        }
+      },
+      "requests_per_s": 6427.488666930107,
+      "mean_success_ms": 15.577706378434092,
+      "top3": [
+        "SKU-000001",
+        "SKU-000002",
+        "SKU-000003"
+      ]
+    }
+  },
+  "layered": {
+    "default": {
+      "file": "layered/reports/default/report-20260921-201120.json",
+      "stations": 10,
+      "wall_s": 60.019231833,
+      "tx_per_s": 254.301821830516,
+      "scans_per_s": 5274.04284148063,
+      "completed": 15263,
+      "scans": 316544,
+      "ops": {
+        "START_TRANSACTION": {
+          "successCount": 30261,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 1.561423669806021,
+          "p50Ms": 1.382166,
+          "p95Ms": 3.099375,
+          "p99Ms": 4.532958,
+          "maxMs": 47.514667
+        },
+        "SCAN_ITEM": {
+          "successCount": 316544,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 1.5886309682034725,
+          "p50Ms": 1.423875,
+          "p95Ms": 3.132333,
+          "p99Ms": 4.543,
+          "maxMs": 55.315375
+        },
+        "COMPLETE_TRANSACTION": {
+          "successCount": 15263,
+          "errorCount": 14998,
+          "errorRate": 0.49562142691913685,
+          "meanMs": 1.839973041472843,
+          "p50Ms": 1.676125,
+          "p95Ms": 3.56725,
+          "p99Ms": 4.913375,
+          "maxMs": 38.903709
+        }
+      },
+      "requests_per_s": 6282.419625915308,
+      "mean_success_ms": 1.5969523719384202,
+      "top3": [
+        "SKU-000001",
+        "SKU-000002",
+        "SKU-000003"
+      ]
+    },
+    "stress": {
+      "file": "layered/reports/stress/report-20260921-201322.json",
+      "stations": 100,
+      "wall_s": 120.127861666,
+      "tx_per_s": 192.28678243040557,
+      "scans_per_s": 5358.407209392505,
+      "completed": 23099,
+      "scans": 643694,
+      "ops": {
+        "START_TRANSACTION": {
+          "successCount": 61244,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 15.725093941479981,
+          "p50Ms": 15.264958,
+          "p95Ms": 31.317542,
+          "p99Ms": 44.220792,
+          "maxMs": 172.823292
+        },
+        "SCAN_ITEM": {
+          "successCount": 643694,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 15.681000751790448,
+          "p50Ms": 15.258,
+          "p95Ms": 31.400167,
+          "p99Ms": 44.754458,
+          "maxMs": 221.537834
+        },
+        "COMPLETE_TRANSACTION": {
+          "successCount": 23099,
+          "errorCount": 38145,
+          "errorRate": 0.6228365227614133,
+          "meanMs": 16.28039720230313,
+          "p50Ms": 16.053916,
+          "p95Ms": 32.628667,
+          "p99Ms": 44.600334,
+          "maxMs": 155.999042
+        }
+      },
+      "requests_per_s": 6378.054094813326,
+      "mean_success_ms": 15.703727483975403,
+      "top3": [
+        "SKU-000001",
+        "SKU-000002",
+        "SKU-000004"
+      ]
+    }
+  },
+  "pipeline": {
+    "default": {
+      "file": "pipeline/reports/default/report-20260929-200339.json",
+      "stations": 10,
+      "wall_s": 60.053294958,
+      "tx_per_s": 246.23128523325346,
+      "scans_per_s": 5129.760160794673,
+      "completed": 14787,
+      "scans": 308059,
+      "ops": {
+        "START_TRANSACTION": {
+          "successCount": 29223,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 1.624945309482257,
+          "p50Ms": 1.306958,
+          "p95Ms": 3.343041,
+          "p99Ms": 5.409834,
+          "maxMs": 95.005334
+        },
+        "SCAN_ITEM": {
+          "successCount": 308059,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 1.627584538085237,
+          "p50Ms": 1.322334,
+          "p95Ms": 3.330209,
+          "p99Ms": 5.5115,
+          "maxMs": 172.387125
+        },
+        "COMPLETE_TRANSACTION": {
+          "successCount": 14787,
+          "errorCount": 14436,
+          "errorRate": 0.49399445642131196,
+          "meanMs": 1.9565290237370665,
+          "p50Ms": 1.634333,
+          "p95Ms": 3.974333,
+          "p99Ms": 6.144125,
+          "maxMs": 55.368625
+        }
+      },
+      "requests_per_s": 6102.995685021543,
+      "mean_success_ms": 1.6411812362661866,
+      "top3": [
+        "SKU-000001",
+        "SKU-000002",
+        "SKU-000004"
+      ]
+    },
+    "stress": {
+      "file": "pipeline/reports/stress/report-20260929-200540.json",
+      "stations": 100,
+      "wall_s": 120.1025485,
+      "tx_per_s": 198.1223570788758,
+      "scans_per_s": 5599.58142769968,
+      "completed": 23795,
+      "scans": 672524,
+      "ops": {
+        "START_TRANSACTION": {
+          "successCount": 64207,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 14.721414291930786,
+          "p50Ms": 13.19575,
+          "p95Ms": 32.85675,
+          "p99Ms": 62.485584,
+          "maxMs": 323.662834
+        },
+        "SCAN_ITEM": {
+          "successCount": 672524,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 15.022044699967585,
+          "p50Ms": 13.283375,
+          "p95Ms": 33.07425,
+          "p99Ms": 62.258416,
+          "maxMs": 336.102833
+        },
+        "COMPLETE_TRANSACTION": {
+          "successCount": 23795,
+          "errorCount": 40412,
+          "errorRate": 0.6294017786222686,
+          "meanMs": 15.534431169741543,
+          "p50Ms": 14.023959,
+          "p95Ms": 34.193209,
+          "p99Ms": 62.82925,
+          "maxMs": 323.569667
+        }
+      },
+      "requests_per_s": 6668.784384704376,
+      "mean_success_ms": 15.012695459362337,
+      "top3": [
+        "SKU-000001",
+        "SKU-000002",
+        "SKU-000003"
+      ]
+    }
+  },
+  "service-based": {
+    "default": {
+      "file": "service-based/reports/default/report-20261007-203911.json",
+      "stations": 10,
+      "wall_s": 60.012764709,
+      "tx_per_s": 252.16302020710825,
+      "scans_per_s": 5200.34365210968,
+      "completed": 15133,
+      "scans": 312087,
+      "ops": {
+        "START_TRANSACTION": {
+          "successCount": 29644,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 1.8304408907704763,
+          "p50Ms": 1.539958,
+          "p95Ms": 3.732042,
+          "p99Ms": 5.379375,
+          "maxMs": 67.576084
+        },
+        "SCAN_ITEM": {
+          "successCount": 312087,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 1.4919701823369764,
+          "p50Ms": 1.297541,
+          "p95Ms": 3.082583,
+          "p99Ms": 4.715375,
+          "maxMs": 115.915833
+        },
+        "COMPLETE_TRANSACTION": {
+          "successCount": 15133,
+          "errorCount": 14511,
+          "errorRate": 0.48950883821346647,
+          "meanMs": 2.859599314610454,
+          "p50Ms": 2.333791,
+          "p95Ms": 6.658167,
+          "p99Ms": 9.442292,
+          "maxMs": 48.494917
+        }
+      },
+      "requests_per_s": 6188.266809582688,
+      "mean_success_ms": 1.5780812984470274,
+      "top3": [
+        "SKU-000001",
+        "SKU-000002",
+        "SKU-000003"
+      ]
+    },
+    "stress": {
+      "file": "service-based/reports/stress/report-20261007-204114.json",
+      "stations": 100,
+      "wall_s": 120.137703167,
+      "tx_per_s": 185.88669011723093,
+      "scans_per_s": 5042.571849054668,
+      "completed": 22332,
+      "scans": 605803,
+      "ops": {
+        "START_TRANSACTION": {
+          "successCount": 57713,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 18.9391028519571,
+          "p50Ms": 17.377458,
+          "p95Ms": 36.88575,
+          "p99Ms": 58.388084,
+          "maxMs": 298.241291
+        },
+        "SCAN_ITEM": {
+          "successCount": 605803,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 17.74637769871889,
+          "p50Ms": 16.955125,
+          "p95Ms": 36.114208,
+          "p99Ms": 56.223875,
+          "maxMs": 296.134167
+        },
+        "COMPLETE_TRANSACTION": {
+          "successCount": 22332,
+          "errorCount": 35381,
+          "errorRate": 0.6130507857848319,
+          "meanMs": 3.044271968162278,
+          "p50Ms": 2.35275,
+          "p95Ms": 7.351833,
+          "p99Ms": 11.858666,
+          "maxMs": 55.392
+        }
+      },
+      "requests_per_s": 6003.35266104963,
+      "mean_success_ms": 17.368026112936104,
+      "top3": [
+        "SKU-000001",
+        "SKU-000002",
+        "SKU-000003"
+      ]
+    }
+  },
+  "microservices": {
+    "default": {
+      "file": "microservices/reports/default/report-20261019-204525.json",
+      "stations": 10,
+      "wall_s": 60.022595583,
+      "tx_per_s": 258.2360834190585,
+      "scans_per_s": 5487.966603251917,
+      "completed": 15500,
+      "scans": 329402,
+      "ops": {
+        "START_TRANSACTION": {
+          "successCount": 31242,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 1.2182206126688433,
+          "p50Ms": 1.099459,
+          "p95Ms": 2.089667,
+          "p99Ms": 3.172,
+          "maxMs": 53.810542
+        },
+        "SCAN_ITEM": {
+          "successCount": 329402,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 1.2698606331959128,
+          "p50Ms": 1.157916,
+          "p95Ms": 2.142875,
+          "p99Ms": 3.208375,
+          "maxMs": 100.264875
+        },
+        "COMPLETE_TRANSACTION": {
+          "successCount": 15500,
+          "errorCount": 15742,
+          "errorRate": 0.5038729914858203,
+          "meanMs": 5.738493518129032,
+          "p50Ms": 4.692083,
+          "p95Ms": 11.799667,
+          "p99Ms": 18.315042,
+          "maxMs": 111.062875
+        }
+      },
+      "requests_per_s": 6528.974566887817,
+      "mean_success_ms": 1.4497132220851592,
+      "top3": [
+        "SKU-000001",
+        "SKU-000002",
+        "SKU-000003"
+      ]
+    },
+    "stress": {
+      "file": "microservices/reports/stress/report-20261019-204729.json",
+      "stations": 100,
+      "wall_s": 120.135788375,
+      "tx_per_s": 166.91945232344258,
+      "scans_per_s": 4092.0445659829797,
+      "completed": 20053,
+      "scans": 491601,
+      "ops": {
+        "START_TRANSACTION": {
+          "successCount": 46885,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 18.347608883779458,
+          "p50Ms": 13.808958,
+          "p95Ms": 38.352042,
+          "p99Ms": 93.941583,
+          "maxMs": 3639.88025
+        },
+        "SCAN_ITEM": {
+          "successCount": 491601,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 18.74526830199898,
+          "p50Ms": 13.85425,
+          "p95Ms": 37.747584,
+          "p99Ms": 98.293416,
+          "maxMs": 3831.074041
+        },
+        "COMPLETE_TRANSACTION": {
+          "successCount": 20053,
+          "errorCount": 26832,
+          "errorRate": 0.5722939106323984,
+          "meanMs": 41.743293297361994,
+          "p50Ms": 32.289042,
+          "p95Ms": 82.234959,
+          "p99Ms": 221.937,
+          "maxMs": 3634.886125
+        }
+      },
+      "requests_per_s": 4872.578004589134,
+      "mean_success_ms": 19.537576687642222,
+      "top3": [
+        "SKU-000001",
+        "SKU-000002",
+        "SKU-000003"
+      ]
+    }
+  },
+  "event-based": {
+    "default": {
+      "file": "event-based/reports/default/report-20261026-214357.json",
+      "stations": 10,
+      "wall_s": 60.027099709,
+      "tx_per_s": 220.73363637812736,
+      "scans_per_s": 4273.5531325618595,
+      "completed": 13250,
+      "scans": 256529,
+      "ops": {
+        "START_TRANSACTION": {
+          "successCount": 24424,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 1.130107949926302,
+          "p50Ms": 0.886,
+          "p95Ms": 2.243291,
+          "p99Ms": 4.711,
+          "maxMs": 50.173
+        },
+        "SCAN_ITEM": {
+          "successCount": 256529,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 1.1366616956874271,
+          "p50Ms": 0.927166,
+          "p95Ms": 2.171084,
+          "p99Ms": 4.201542,
+          "maxMs": 91.726375
+        },
+        "COMPLETE_TRANSACTION": {
+          "successCount": 13250,
+          "errorCount": 11174,
+          "errorRate": 0.45750081886668853,
+          "meanMs": 11.393948241283018,
+          "p50Ms": 9.365833,
+          "p95Ms": 22.06275,
+          "p99Ms": 43.628,
+          "maxMs": 280.395667
+        }
+      },
+      "requests_per_s": 5087.318918961766,
+      "mean_success_ms": 1.5980743190892004,
+      "top3": [
+        "SKU-000001",
+        "SKU-000002",
+        "SKU-000003"
+      ]
+    },
+    "stress": {
+      "file": "event-based/reports/stress/report-20261026-214609.json",
+      "stations": 100,
+      "wall_s": 120.130471083,
+      "tx_per_s": 231.68975988423244,
+      "scans_per_s": 7238.663031623267,
+      "completed": 27833,
+      "scans": 869584,
+      "ops": {
+        "START_TRANSACTION": {
+          "successCount": 82700,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 8.457710533470376,
+          "p50Ms": 6.634792,
+          "p95Ms": 17.505334,
+          "p99Ms": 34.771667,
+          "maxMs": 1331.446584
+        },
+        "SCAN_ITEM": {
+          "successCount": 869584,
+          "errorCount": 0,
+          "errorRate": 0.0,
+          "meanMs": 9.143069953948096,
+          "p50Ms": 7.097125,
+          "p95Ms": 17.536083,
+          "p99Ms": 32.920916,
+          "maxMs": 1333.722791
+        },
+        "COMPLETE_TRANSACTION": {
+          "successCount": 27833,
+          "errorCount": 54867,
+          "errorRate": 0.6634461910519952,
+          "meanMs": 31.983261410052812,
+          "p50Ms": 23.250417,
+          "p95Ms": 69.562375,
+          "p99Ms": 136.836917,
+          "maxMs": 1374.432042
+        }
+      },
+      "requests_per_s": 8615.499387203048,
+      "mean_success_ms": 9.733848222995828,
+      "top3": [
+        "SKU-000001",
+        "SKU-000002",
+        "SKU-000003"
+      ]
+    }
+  }
+}

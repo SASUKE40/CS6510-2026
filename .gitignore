@@ -23,3 +23,6 @@ __pycache__/
 /event-based/target/
 /event-based/data/
 /event-based/reports/**/client.log
+/event-based/slides/node_modules/
+/event-based/slides/dist/
+/event-based/slides/.slidev/

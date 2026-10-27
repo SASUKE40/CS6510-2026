@@ -1,5 +1,10 @@
 # Self-Checkout Supermarket assignments
 
+- **Assignment 7 — Architecture comparison:** [`comparison/`](comparison/)
+  compares all six implementations using their load-test reports, code metrics
+  (size, complexity, coupling, cohesion), and a single-component crash
+  experiment, ending with a FoSA characteristics chart. Submit
+  [`comparison/architecture-comparison.pdf`](comparison/architecture-comparison.pdf).
 - **Assignment 6 — Event-based:** [`event-based/`](event-based/) keeps the
   Assignment 5 microservices but replaces every service-to-service HTTP call
   with Kafka topics. The checkout saga runs on commands and reply events, the

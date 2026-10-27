@@ -1,0 +1,1065 @@
+{
+  "monolith": {
+    "baseline": {
+      "GET /items": {
+        "status": 200,
+        "ms": 2.1,
+        "ok": true
+      },
+      "POST /transactions": {
+        "status": 201,
+        "ms": 0.5,
+        "ok": true
+      },
+      "POST /transactions/{id}/items": {
+        "status": 200,
+        "ms": 0.5,
+        "ok": true
+      },
+      "POST /transactions/{id}/complete": {
+        "status": 200,
+        "ms": 0.5,
+        "ok": true
+      },
+      "GET /transactions/{id}": {
+        "status": 200,
+        "ms": 0.3,
+        "ok": true
+      },
+      "GET /inventory/low-stock": {
+        "status": 200,
+        "ms": 0.4,
+        "ok": true
+      },
+      "GET /analytics/popular-items": {
+        "status": 200,
+        "ms": 0.3,
+        "ok": true
+      }
+    },
+    "failures": {
+      "server": {
+        "probes": {
+          "GET /items": {
+            "status": "refused",
+            "ms": 0.6,
+            "ok": false
+          },
+          "POST /transactions": {
+            "status": "refused",
+            "ms": 0.3,
+            "ok": false
+          },
+          "POST /transactions/{id}/items": {
+            "status": "refused",
+            "ms": 0.2,
+            "ok": false
+          },
+          "POST /transactions/{id}/complete": {
+            "status": "refused",
+            "ms": 0.2,
+            "ok": false
+          },
+          "GET /transactions/{id}": {
+            "status": "refused",
+            "ms": 0.2,
+            "ok": false
+          },
+          "GET /inventory/low-stock": {
+            "status": "refused",
+            "ms": 0.2,
+            "ok": false
+          },
+          "GET /analytics/popular-items": {
+            "status": "refused",
+            "ms": 0.3,
+            "ok": false
+          }
+        },
+        "available": 0,
+        "restart_to_healthy_ms": 64,
+        "restart_to_checkout_ms": 67,
+        "probe_basket_final_status": "OPEN"
+      }
+    }
+  },
+  "layered": {
+    "baseline": {
+      "GET /items": {
+        "status": 200,
+        "ms": 2.0,
+        "ok": true
+      },
+      "POST /transactions": {
+        "status": 201,
+        "ms": 0.5,
+        "ok": true
+      },
+      "POST /transactions/{id}/items": {
+        "status": 200,
+        "ms": 0.5,
+        "ok": true
+      },
+      "POST /transactions/{id}/complete": {
+        "status": 200,
+        "ms": 0.5,
+        "ok": true
+      },
+      "GET /transactions/{id}": {
+        "status": 200,
+        "ms": 0.3,
+        "ok": true
+      },
+      "GET /inventory/low-stock": {
+        "status": 200,
+        "ms": 0.4,
+        "ok": true
+      },
+      "GET /analytics/popular-items": {
+        "status": 200,
+        "ms": 0.3,
+        "ok": true
+      }
+    },
+    "failures": {
+      "server": {
+        "probes": {
+          "GET /items": {
+            "status": "refused",
+            "ms": 0.6,
+            "ok": false
+          },
+          "POST /transactions": {
+            "status": "refused",
+            "ms": 0.5,
+            "ok": false
+          },
+          "POST /transactions/{id}/items": {
+            "status": "refused",
+            "ms": 0.3,
+            "ok": false
+          },
+          "POST /transactions/{id}/complete": {
+            "status": "refused",
+            "ms": 0.2,
+            "ok": false
+          },
+          "GET /transactions/{id}": {
+            "status": "refused",
+            "ms": 0.2,
+            "ok": false
+          },
+          "GET /inventory/low-stock": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "GET /analytics/popular-items": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          }
+        },
+        "available": 0,
+        "restart_to_healthy_ms": 66,
+        "restart_to_checkout_ms": 69,
+        "probe_basket_final_status": "OPEN"
+      }
+    }
+  },
+  "pipeline": {
+    "baseline": {
+      "GET /items": {
+        "status": 200,
+        "ms": 2.0,
+        "ok": true
+      },
+      "POST /transactions": {
+        "status": 201,
+        "ms": 0.5,
+        "ok": true
+      },
+      "POST /transactions/{id}/items": {
+        "status": 200,
+        "ms": 0.6,
+        "ok": true
+      },
+      "POST /transactions/{id}/complete": {
+        "status": 200,
+        "ms": 0.6,
+        "ok": true
+      },
+      "GET /transactions/{id}": {
+        "status": 200,
+        "ms": 0.3,
+        "ok": true
+      },
+      "GET /inventory/low-stock": {
+        "status": 200,
+        "ms": 0.4,
+        "ok": true
+      },
+      "GET /analytics/popular-items": {
+        "status": 200,
+        "ms": 0.3,
+        "ok": true
+      }
+    },
+    "failures": {
+      "server": {
+        "probes": {
+          "GET /items": {
+            "status": "refused",
+            "ms": 0.2,
+            "ok": false
+          },
+          "POST /transactions": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "POST /transactions/{id}/items": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "POST /transactions/{id}/complete": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "GET /transactions/{id}": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "GET /inventory/low-stock": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "GET /analytics/popular-items": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          }
+        },
+        "available": 0,
+        "restart_to_healthy_ms": 59,
+        "restart_to_checkout_ms": 61,
+        "probe_basket_final_status": "OPEN"
+      }
+    }
+  },
+  "service-based": {
+    "baseline": {
+      "GET /items": {
+        "status": 200,
+        "ms": 2.4,
+        "ok": true
+      },
+      "POST /transactions": {
+        "status": 201,
+        "ms": 0.8,
+        "ok": true
+      },
+      "POST /transactions/{id}/items": {
+        "status": 200,
+        "ms": 0.7,
+        "ok": true
+      },
+      "POST /transactions/{id}/complete": {
+        "status": 200,
+        "ms": 1.0,
+        "ok": true
+      },
+      "GET /transactions/{id}": {
+        "status": 200,
+        "ms": 0.4,
+        "ok": true
+      },
+      "GET /inventory/low-stock": {
+        "status": 200,
+        "ms": 0.8,
+        "ok": true
+      },
+      "GET /analytics/popular-items": {
+        "status": 200,
+        "ms": 0.5,
+        "ok": true
+      }
+    },
+    "failures": {
+      "inventory-service": {
+        "probes": {
+          "GET /items": {
+            "status": 502,
+            "ms": 1.3,
+            "ok": false
+          },
+          "POST /transactions": {
+            "status": 201,
+            "ms": 1.7,
+            "ok": true
+          },
+          "POST /transactions/{id}/items": {
+            "status": 200,
+            "ms": 0.8,
+            "ok": true
+          },
+          "POST /transactions/{id}/complete": {
+            "status": 200,
+            "ms": 0.9,
+            "ok": true
+          },
+          "GET /transactions/{id}": {
+            "status": 200,
+            "ms": 0.6,
+            "ok": true
+          },
+          "GET /inventory/low-stock": {
+            "status": 502,
+            "ms": 0.4,
+            "ok": false
+          },
+          "GET /analytics/popular-items": {
+            "status": 200,
+            "ms": 0.6,
+            "ok": true
+          }
+        },
+        "available": 5,
+        "restart_to_healthy_ms": 58,
+        "restart_to_checkout_ms": 62,
+        "probe_basket_final_status": "COMPLETED"
+      },
+      "basket-service": {
+        "probes": {
+          "GET /items": {
+            "status": 200,
+            "ms": 3.2,
+            "ok": true
+          },
+          "POST /transactions": {
+            "status": 502,
+            "ms": 0.6,
+            "ok": false
+          },
+          "POST /transactions/{id}/items": {
+            "status": 502,
+            "ms": 0.4,
+            "ok": false
+          },
+          "POST /transactions/{id}/complete": {
+            "status": 200,
+            "ms": 1.0,
+            "ok": true
+          },
+          "GET /transactions/{id}": {
+            "status": 502,
+            "ms": 0.5,
+            "ok": false
+          },
+          "GET /inventory/low-stock": {
+            "status": 200,
+            "ms": 0.8,
+            "ok": true
+          },
+          "GET /analytics/popular-items": {
+            "status": 200,
+            "ms": 0.6,
+            "ok": true
+          }
+        },
+        "available": 4,
+        "restart_to_healthy_ms": 58,
+        "restart_to_checkout_ms": 61,
+        "probe_basket_final_status": "COMPLETED"
+      },
+      "payment-service": {
+        "probes": {
+          "GET /items": {
+            "status": 200,
+            "ms": 4.5,
+            "ok": true
+          },
+          "POST /transactions": {
+            "status": 201,
+            "ms": 1.1,
+            "ok": true
+          },
+          "POST /transactions/{id}/items": {
+            "status": 200,
+            "ms": 0.9,
+            "ok": true
+          },
+          "POST /transactions/{id}/complete": {
+            "status": 502,
+            "ms": 0.5,
+            "ok": false
+          },
+          "GET /transactions/{id}": {
+            "status": 200,
+            "ms": 0.5,
+            "ok": true
+          },
+          "GET /inventory/low-stock": {
+            "status": 200,
+            "ms": 0.7,
+            "ok": true
+          },
+          "GET /analytics/popular-items": {
+            "status": 200,
+            "ms": 0.5,
+            "ok": true
+          }
+        },
+        "available": 6,
+        "restart_to_healthy_ms": 55,
+        "restart_to_checkout_ms": 58,
+        "probe_basket_final_status": "OPEN"
+      },
+      "analytics-service": {
+        "probes": {
+          "GET /items": {
+            "status": 200,
+            "ms": 5.8,
+            "ok": true
+          },
+          "POST /transactions": {
+            "status": 201,
+            "ms": 1.4,
+            "ok": true
+          },
+          "POST /transactions/{id}/items": {
+            "status": 200,
+            "ms": 0.9,
+            "ok": true
+          },
+          "POST /transactions/{id}/complete": {
+            "status": 200,
+            "ms": 1.0,
+            "ok": true
+          },
+          "GET /transactions/{id}": {
+            "status": 200,
+            "ms": 0.5,
+            "ok": true
+          },
+          "GET /inventory/low-stock": {
+            "status": 200,
+            "ms": 0.8,
+            "ok": true
+          },
+          "GET /analytics/popular-items": {
+            "status": 502,
+            "ms": 0.5,
+            "ok": false
+          }
+        },
+        "available": 6,
+        "restart_to_healthy_ms": 55,
+        "restart_to_checkout_ms": 58,
+        "probe_basket_final_status": "COMPLETED"
+      },
+      "checkout-gateway": {
+        "probes": {
+          "GET /items": {
+            "status": "refused",
+            "ms": 0.5,
+            "ok": false
+          },
+          "POST /transactions": {
+            "status": "refused",
+            "ms": 0.2,
+            "ok": false
+          },
+          "POST /transactions/{id}/items": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "POST /transactions/{id}/complete": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "GET /transactions/{id}": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "GET /inventory/low-stock": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "GET /analytics/popular-items": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          }
+        },
+        "available": 0,
+        "restart_to_healthy_ms": 61,
+        "restart_to_checkout_ms": 66,
+        "probe_basket_final_status": "OPEN"
+      }
+    }
+  },
+  "microservices": {
+    "baseline": {
+      "GET /items": {
+        "status": 200,
+        "ms": 2.3,
+        "ok": true
+      },
+      "POST /transactions": {
+        "status": 201,
+        "ms": 0.8,
+        "ok": true
+      },
+      "POST /transactions/{id}/items": {
+        "status": 200,
+        "ms": 0.7,
+        "ok": true
+      },
+      "POST /transactions/{id}/complete": {
+        "status": 200,
+        "ms": 3.4,
+        "ok": true
+      },
+      "GET /transactions/{id}": {
+        "status": 200,
+        "ms": 0.6,
+        "ok": true
+      },
+      "GET /inventory/low-stock": {
+        "status": 200,
+        "ms": 0.8,
+        "ok": true
+      },
+      "GET /analytics/popular-items": {
+        "status": 200,
+        "ms": 1.0,
+        "ok": true
+      }
+    },
+    "failures": {
+      "inventory-service": {
+        "probes": {
+          "GET /items": {
+            "status": 502,
+            "ms": 1.3,
+            "ok": false
+          },
+          "POST /transactions": {
+            "status": 201,
+            "ms": 3.1,
+            "ok": true
+          },
+          "POST /transactions/{id}/items": {
+            "status": 200,
+            "ms": 1.2,
+            "ok": true
+          },
+          "POST /transactions/{id}/complete": {
+            "status": 503,
+            "ms": 161.8,
+            "ok": false
+          },
+          "GET /transactions/{id}": {
+            "status": 200,
+            "ms": 1.1,
+            "ok": true
+          },
+          "GET /inventory/low-stock": {
+            "status": 502,
+            "ms": 1.6,
+            "ok": false
+          },
+          "GET /analytics/popular-items": {
+            "status": 200,
+            "ms": 1.5,
+            "ok": true
+          }
+        },
+        "available": 4,
+        "restart_to_healthy_ms": 60,
+        "restart_to_checkout_ms": 66,
+        "probe_basket_final_status": "OPEN"
+      },
+      "basket-service": {
+        "probes": {
+          "GET /items": {
+            "status": 200,
+            "ms": 5.7,
+            "ok": true
+          },
+          "POST /transactions": {
+            "status": 502,
+            "ms": 0.8,
+            "ok": false
+          },
+          "POST /transactions/{id}/items": {
+            "status": 502,
+            "ms": 0.5,
+            "ok": false
+          },
+          "POST /transactions/{id}/complete": {
+            "status": 503,
+            "ms": 162.3,
+            "ok": false
+          },
+          "GET /transactions/{id}": {
+            "status": 502,
+            "ms": 0.8,
+            "ok": false
+          },
+          "GET /inventory/low-stock": {
+            "status": 200,
+            "ms": 1.0,
+            "ok": true
+          },
+          "GET /analytics/popular-items": {
+            "status": 200,
+            "ms": 0.7,
+            "ok": true
+          }
+        },
+        "available": 3,
+        "restart_to_healthy_ms": 58,
+        "restart_to_checkout_ms": 63,
+        "probe_basket_final_status": "OPEN"
+      },
+      "payment-service": {
+        "probes": {
+          "GET /items": {
+            "status": 200,
+            "ms": 7.4,
+            "ok": true
+          },
+          "POST /transactions": {
+            "status": 201,
+            "ms": 1.5,
+            "ok": true
+          },
+          "POST /transactions/{id}/items": {
+            "status": 200,
+            "ms": 0.8,
+            "ok": true
+          },
+          "POST /transactions/{id}/complete": {
+            "status": 502,
+            "ms": 0.5,
+            "ok": false
+          },
+          "GET /transactions/{id}": {
+            "status": 200,
+            "ms": 0.4,
+            "ok": true
+          },
+          "GET /inventory/low-stock": {
+            "status": 200,
+            "ms": 0.6,
+            "ok": true
+          },
+          "GET /analytics/popular-items": {
+            "status": 200,
+            "ms": 0.9,
+            "ok": true
+          }
+        },
+        "available": 6,
+        "restart_to_healthy_ms": 56,
+        "restart_to_checkout_ms": 61,
+        "probe_basket_final_status": "OPEN"
+      },
+      "analytics-service": {
+        "probes": {
+          "GET /items": {
+            "status": 200,
+            "ms": 5.4,
+            "ok": true
+          },
+          "POST /transactions": {
+            "status": 201,
+            "ms": 1.4,
+            "ok": true
+          },
+          "POST /transactions/{id}/items": {
+            "status": 200,
+            "ms": 0.7,
+            "ok": true
+          },
+          "POST /transactions/{id}/complete": {
+            "status": 200,
+            "ms": 2.2,
+            "ok": true
+          },
+          "GET /transactions/{id}": {
+            "status": 200,
+            "ms": 0.6,
+            "ok": true
+          },
+          "GET /inventory/low-stock": {
+            "status": 200,
+            "ms": 0.8,
+            "ok": true
+          },
+          "GET /analytics/popular-items": {
+            "status": 502,
+            "ms": 0.5,
+            "ok": false
+          }
+        },
+        "available": 6,
+        "restart_to_healthy_ms": 58,
+        "restart_to_checkout_ms": 63,
+        "probe_basket_final_status": "COMPLETED"
+      },
+      "checkout-gateway": {
+        "probes": {
+          "GET /items": {
+            "status": "refused",
+            "ms": 0.5,
+            "ok": false
+          },
+          "POST /transactions": {
+            "status": "refused",
+            "ms": 0.3,
+            "ok": false
+          },
+          "POST /transactions/{id}/items": {
+            "status": "refused",
+            "ms": 0.2,
+            "ok": false
+          },
+          "POST /transactions/{id}/complete": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "GET /transactions/{id}": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "GET /inventory/low-stock": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "GET /analytics/popular-items": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          }
+        },
+        "available": 0,
+        "restart_to_healthy_ms": 55,
+        "restart_to_checkout_ms": 61,
+        "probe_basket_final_status": "OPEN"
+      }
+    }
+  },
+  "event-based": {
+    "baseline": {
+      "GET /items": {
+        "status": 200,
+        "ms": 2.7,
+        "ok": true
+      },
+      "POST /transactions": {
+        "status": 201,
+        "ms": 0.9,
+        "ok": true
+      },
+      "POST /transactions/{id}/items": {
+        "status": 200,
+        "ms": 0.8,
+        "ok": true
+      },
+      "POST /transactions/{id}/complete": {
+        "status": 200,
+        "ms": 19.4,
+        "ok": true
+      },
+      "GET /transactions/{id}": {
+        "status": 200,
+        "ms": 1.1,
+        "ok": true
+      },
+      "GET /inventory/low-stock": {
+        "status": 200,
+        "ms": 1.1,
+        "ok": true
+      },
+      "GET /analytics/popular-items": {
+        "status": 200,
+        "ms": 113.8,
+        "ok": true
+      }
+    },
+    "failures": {
+      "kafka-broker": {
+        "probes": {
+          "GET /items": {
+            "status": 200,
+            "ms": 6.1,
+            "ok": true
+          },
+          "POST /transactions": {
+            "status": 201,
+            "ms": 1.6,
+            "ok": true
+          },
+          "POST /transactions/{id}/items": {
+            "status": 200,
+            "ms": 0.8,
+            "ok": true
+          },
+          "POST /transactions/{id}/complete": {
+            "status": "timeout",
+            "ms": 15000.5,
+            "ok": false
+          },
+          "GET /transactions/{id}": {
+            "status": 200,
+            "ms": 2.0,
+            "ok": true
+          },
+          "GET /inventory/low-stock": {
+            "status": 200,
+            "ms": 1.2,
+            "ok": true
+          },
+          "GET /analytics/popular-items": {
+            "status": 200,
+            "ms": 5006.3,
+            "ok": true
+          }
+        },
+        "available": 6,
+        "restart_to_healthy_ms": 14045,
+        "restart_to_checkout_ms": 21796,
+        "probe_basket_final_status": "OPEN"
+      },
+      "inventory-service": {
+        "probes": {
+          "GET /items": {
+            "status": 502,
+            "ms": 1.7,
+            "ok": false
+          },
+          "POST /transactions": {
+            "status": 201,
+            "ms": 1.5,
+            "ok": true
+          },
+          "POST /transactions/{id}/items": {
+            "status": 200,
+            "ms": 1.1,
+            "ok": true
+          },
+          "POST /transactions/{id}/complete": {
+            "status": 503,
+            "ms": 10006.5,
+            "ok": false
+          },
+          "GET /transactions/{id}": {
+            "status": 200,
+            "ms": 1.2,
+            "ok": true
+          },
+          "GET /inventory/low-stock": {
+            "status": 502,
+            "ms": 0.7,
+            "ok": false
+          },
+          "GET /analytics/popular-items": {
+            "status": 200,
+            "ms": 127.5,
+            "ok": true
+          }
+        },
+        "available": 4,
+        "restart_to_healthy_ms": 30815,
+        "restart_to_checkout_ms": 33755,
+        "probe_basket_final_status": "OPEN"
+      },
+      "basket-service": {
+        "probes": {
+          "GET /items": {
+            "status": 200,
+            "ms": 5.8,
+            "ok": true
+          },
+          "POST /transactions": {
+            "status": 502,
+            "ms": 0.8,
+            "ok": false
+          },
+          "POST /transactions/{id}/items": {
+            "status": 502,
+            "ms": 0.8,
+            "ok": false
+          },
+          "POST /transactions/{id}/complete": {
+            "status": 503,
+            "ms": 10008.7,
+            "ok": false
+          },
+          "GET /transactions/{id}": {
+            "status": 502,
+            "ms": 0.9,
+            "ok": false
+          },
+          "GET /inventory/low-stock": {
+            "status": 200,
+            "ms": 1.0,
+            "ok": true
+          },
+          "GET /analytics/popular-items": {
+            "status": 200,
+            "ms": 119.2,
+            "ok": true
+          }
+        },
+        "available": 3,
+        "restart_to_healthy_ms": 30428,
+        "restart_to_checkout_ms": 31344,
+        "probe_basket_final_status": "OPEN"
+      },
+      "payment-service": {
+        "probes": {
+          "GET /items": {
+            "status": 200,
+            "ms": 3.5,
+            "ok": true
+          },
+          "POST /transactions": {
+            "status": 201,
+            "ms": 1.0,
+            "ok": true
+          },
+          "POST /transactions/{id}/items": {
+            "status": 200,
+            "ms": 0.7,
+            "ok": true
+          },
+          "POST /transactions/{id}/complete": {
+            "status": 502,
+            "ms": 0.4,
+            "ok": false
+          },
+          "GET /transactions/{id}": {
+            "status": 200,
+            "ms": 0.5,
+            "ok": true
+          },
+          "GET /inventory/low-stock": {
+            "status": 200,
+            "ms": 0.7,
+            "ok": true
+          },
+          "GET /analytics/popular-items": {
+            "status": 200,
+            "ms": 112.8,
+            "ok": true
+          }
+        },
+        "available": 6,
+        "restart_to_healthy_ms": 30156,
+        "restart_to_checkout_ms": 42343,
+        "probe_basket_final_status": "OPEN"
+      },
+      "analytics-service": {
+        "probes": {
+          "GET /items": {
+            "status": 200,
+            "ms": 3.9,
+            "ok": true
+          },
+          "POST /transactions": {
+            "status": 201,
+            "ms": 1.0,
+            "ok": true
+          },
+          "POST /transactions/{id}/items": {
+            "status": 200,
+            "ms": 0.8,
+            "ok": true
+          },
+          "POST /transactions/{id}/complete": {
+            "status": 200,
+            "ms": 12.2,
+            "ok": true
+          },
+          "GET /transactions/{id}": {
+            "status": 200,
+            "ms": 0.5,
+            "ok": true
+          },
+          "GET /inventory/low-stock": {
+            "status": 200,
+            "ms": 0.6,
+            "ok": true
+          },
+          "GET /analytics/popular-items": {
+            "status": 502,
+            "ms": 0.4,
+            "ok": false
+          }
+        },
+        "available": 6,
+        "restart_to_healthy_ms": 30160,
+        "restart_to_checkout_ms": 30177,
+        "probe_basket_final_status": "COMPLETED"
+      },
+      "checkout-gateway": {
+        "probes": {
+          "GET /items": {
+            "status": "refused",
+            "ms": 0.3,
+            "ok": false
+          },
+          "POST /transactions": {
+            "status": "refused",
+            "ms": 0.2,
+            "ok": false
+          },
+          "POST /transactions/{id}/items": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "POST /transactions/{id}/complete": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "GET /transactions/{id}": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "GET /inventory/low-stock": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          },
+          "GET /analytics/popular-items": {
+            "status": "refused",
+            "ms": 0.1,
+            "ok": false
+          }
+        },
+        "available": 0,
+        "restart_to_healthy_ms": 63,
+        "restart_to_checkout_ms": 78,
+        "probe_basket_final_status": "OPEN"
+      }
+    }
+  }
+}

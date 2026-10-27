@@ -1,0 +1,6 @@
+monolith passed=7 failed=0 seconds=0.8
+layered passed=8 failed=0 seconds=0.9
+pipeline passed=10 failed=0 seconds=0.8
+service-based passed=11 failed=0 seconds=3.0
+microservices passed=16 failed=0 seconds=10.7
+event-based passed=16 failed=0 seconds=7.2
