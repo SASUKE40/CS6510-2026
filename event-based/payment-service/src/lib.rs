@@ -16,6 +16,8 @@
 //! a compare-and-set, so a redelivered or stale reply changes nothing and a
 //! command can always be re-sent. Recovery re-sends the command for each
 //! stalled saga's state: STOCK_RESERVED rolls forward, earlier states roll back.
+//! The client's request is answered at the pivot with its receipt, or when
+//! the saga aborts.
 pub mod store;
 
 use axum::{
@@ -220,9 +222,14 @@ impl Payment {
                     .and_then(|b| b["totalCents"].as_i64())
                     .unwrap_or_default();
                 let at = paid_at.clone();
-                self.db(move |s| s.reserved(id, amount, &at))
-                    .await?
-                    .then(|| complete(&saga, &paid_at))
+                if !self.db(move |s| s.reserved(id, amount, &at)).await? {
+                    return Ok(vec![]);
+                }
+                // Past the pivot the saga only rolls forward, so the client
+                // gets its receipt now; recovery re-sends Complete if needed.
+                let basket = saga.basket.clone().unwrap_or_default();
+                self.answer(id, Ok(receipt(&basket, &paid_at)));
+                Some(complete(&saga, &paid_at))
             }
             ("BASKET_LOCKED", "StockRejected") => {
                 let failure = rejection();
@@ -231,11 +238,7 @@ impl Payment {
                     .then(|| release(&saga))
             }
             ("STOCK_RESERVED", "BasketCompleted") => {
-                if self.db(move |s| s.completed(id)).await? {
-                    let basket = saga.basket.unwrap_or_default();
-                    let paid_at = saga.paid_at.unwrap_or_default();
-                    self.answer(id, Ok(receipt(&basket, &paid_at)));
-                }
+                self.db(move |s| s.completed(id)).await?;
                 None
             }
             ("COMPENSATING", "ReservationCancelled") => self

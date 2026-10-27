@@ -2,19 +2,21 @@
 # Requires Rust, Docker, JDK 21+, Python 3, and curl. The Java client is unchanged.
 # Runs the default and stress workloads, each against a fresh Kafka broker and
 # freshly reset per-service databases, then verifies all four stopped
-# databases together with the scan topic.
+# databases together with the scan topic. LOAD_VARIANT=name writes into
+# reports/<mode>/<name>/ instead, for comparison runs (e.g. with
+# CHECKOUT_MAX_BATCH=256).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 source event-based/scripts/services.sh
 build_services
 bash load-client/build.sh
-mkdir -p event-based/reports/default event-based/reports/stress
 base_url="http://localhost:$GATEWAY_PORT"
 trap 'exit_code=$?; stop_services; exit "$exit_code"' EXIT
 require_free_ports
 for mode in ${LOAD_MODES:-default stress}; do
   data="event-based/data/$mode"
-  out="event-based/reports/$mode"
+  out="event-based/reports/$mode${LOAD_VARIANT:+/$LOAD_VARIANT}"
+  mkdir -p "$out"
   start_broker true
   start_services "$data" "$out/logs" true
   if [[ "$mode" == stress ]]; then

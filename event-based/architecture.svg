@@ -38,7 +38,7 @@
     <text x="560" y="254" text-anchor="middle" font-size="15" font-weight="700" fill="#0b2147">payment-service :8083</text>
     <text x="560" y="274" text-anchor="middle" fill="#0b2147">checkout saga orchestrator</text>
     <text x="560" y="300" text-anchor="middle" fill="#555">POST /transactions/{id}/complete</text>
-    <text x="560" y="316" text-anchor="middle" fill="#555">(waits for the saga's final event)</text>
+    <text x="560" y="316" text-anchor="middle" fill="#555">(answers at the pivot with the receipt)</text>
 
     <rect x="765" y="230" width="250" height="120" rx="8" fill="#e8f1ff" stroke="#3567b5" stroke-width="1.5"/>
     <text x="890" y="254" text-anchor="middle" font-size="15" font-weight="700" fill="#0b2147">basket-service :8082</text>
@@ -161,7 +161,7 @@
     <circle cx="1145" cy="805" r="4" fill="#2f9e44"/>
   </g>
   <g font-size="11" fill="#333">
-    <text x="60" y="866">Checkout saga: payment → Checkout → basket → BasketLocked → payment → Reserve → inventory → StockReserved → payment (pivot: payment recorded) → Complete → basket → BasketCompleted → payment → HTTP 200 receipt.</text>
-    <text x="60" y="884">Rejections roll back with Release (and Cancel during recovery). Scans: basket commits line + outbox row in one transaction, the relay publishes ItemScanned, and the scan is acknowledged once Kafka confirms it.</text>
+    <text x="60" y="866">Checkout saga: payment → Checkout → basket → BasketLocked → payment → Reserve → inventory → StockReserved → payment (pivot: payment recorded, HTTP 200 receipt) → Complete → basket → BasketCompleted → payment.</text>
+    <text x="60" y="884">Rejections roll back with Release (and Cancel during recovery). Scans: basket commits line + outbox row in one transaction, the scan is acknowledged, and the relay publishes ItemScanned in order.</text>
   </g>
 </svg>

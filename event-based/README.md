@@ -17,9 +17,9 @@ Submission directory: <https://github.com/SASUKE40/CS6510-2026/tree/main/event-b
 ## Deliverables
 
 - Load test with default parameters (10 stations, 60 s):
-  [`reports/default/report-20261026-193649.json`](reports/default/report-20261026-193649.json)
+  [`reports/default/report-20261026-195939.json`](reports/default/report-20261026-195939.json)
 - Load test in stress mode (`java -cp out Main --stations=100 --duration=120`):
-  [`reports/stress/report-20261026-193904.json`](reports/stress/report-20261026-193904.json)
+  [`reports/stress/report-20261026-200154.json`](reports/stress/report-20261026-200154.json)
 - Architecture diagram showing the microservices and the event broker:
   [`architecture.svg`](architecture.svg) ([PNG](architecture.png), Mermaid
   text version in [`architecture.mmd`](architecture.mmd)).
@@ -30,8 +30,15 @@ Each report directory also contains:
 - `failures.txt`: an accounting of every client error;
 - `logs/`: one log per process.
 
-`sequential-consumers/` holds the comparison run described in
-[Results](#results-and-comparison).
+Comparison runs, described in [Results](#results-and-comparison), are kept
+under each mode:
+
+- `group-commit-256/`: the submitted code with writers sharing commits
+  (`CHECKOUT_MAX_BATCH=256`);
+- `before-latency-changes/`: scans acknowledged only after Kafka confirmed
+  their event, and receipts sent only after basket completed;
+- `sequential-consumers/`: the earlier version, whose consumers also
+  handled one record at a time.
 
 ## Architecture
 
@@ -115,8 +122,8 @@ over events):
 
 1. It records the saga (`STARTED`).
 2. It registers a waiter for the saga and publishes `Checkout`.
-3. The waiter completes when the saga reaches a terminal state, and the
-   request returns the outcome.
+3. The waiter completes at the pivot, with the receipt, or when the saga
+   aborts, with its error. The request returns that outcome.
 
 Each step below is one local SQLite transaction in one service, and every
 saga state is written to `payment.sqlite` before the next command is
@@ -147,11 +154,11 @@ sequenceDiagram
         P-->>C: 409 INSUFFICIENT_STOCK
     else StockReserved
         K->>P: STOCK_RESERVED plus payment row (pivot)
+        P-->>C: 200 receipt
         P->>K: Complete{completedAt}
         K->>B: CHECKING_OUT to COMPLETED
         B->>K: BasketCompleted
         K->>P: saga COMPLETED
-        P-->>C: 200 receipt
     end
 ```
 
@@ -161,7 +168,13 @@ The Assignment 5 rules still hold:
   completions.
 - A reservation is one all-or-nothing local transaction.
 - Recording the payment is the pivot. Before it, failures roll back; after
-  it, the saga only rolls forward.
+  it, the saga only rolls forward. Because nothing can undo the checkout
+  after the pivot, the client gets its receipt there, without waiting for
+  basket to apply `Complete`. That saves two of the six broker round trips.
+  For a few milliseconds afterwards, `GET /transactions/{id}` still shows
+  `OPEN` (the basket is held in `CHECKING_OUT`), and scans and repeated
+  completions get `409 TRANSACTION_NOT_OPEN`, as they would once the basket
+  is `COMPLETED`.
 
 What is new:
 
@@ -193,7 +206,7 @@ What is new:
 | A line short of stock | 409 `INSUFFICIENT_STOCK` | basket released (`OPEN`), no stock change, saga `ABORTED` |
 | inventory down during reserve | 503 after the 10 s saga timeout | `Reserve` waits in Kafka; recovery cancels and releases, and the late reserve is undone or refused |
 | basket down at checkout | 503 after 10 s | recovery cancels; when basket returns it applies `Checkout`, then `Release` |
-| basket down after the pivot | 503 after 10 s | recovery re-sends `Complete`; the basket becomes `COMPLETED` when basket returns |
+| basket down after the pivot | 200 receipt | recovery re-sends `Complete`; the basket becomes `COMPLETED` when basket returns |
 | payment crashes mid-saga | client connection drops | unconsumed replies are redelivered; startup recovery rolls forward or back |
 | Kafka down | 503 for completions once the publish fails | sagas resume from their stored state |
 
@@ -214,11 +227,15 @@ saga timeout (`--saga-timeout-ms`, 10 s by default).
      goes back to the last confirmed sequence and sends again.
    - After a restart, the relay resumes from the last sequence in the topic.
      Analytics drops any duplicate by sequence.
-3. **Acknowledgment.** A scan request is acknowledged only after Kafka has
-   confirmed its event, waiting at most 5 s. This keeps Assignment 5's
-   guarantee that `/analytics/popular-items` includes every acknowledged
-   scan. If Kafka is slow, the scan is still durable in the outbox, so the
-   request is acknowledged after 5 s and the event follows later.
+3. **Acknowledgment.** A scan request is acknowledged as soon as the line
+   and its outbox row are committed. The handler then wakes the relay, and
+   no event can be lost, because it is already durable in the outbox.
+   Analytics therefore trails acknowledged scans by the relay's latency,
+   normally a few milliseconds. Assignment 5 guaranteed that
+   `/analytics/popular-items` includes every acknowledged scan. That
+   guarantee would now require each scan to wait for Kafka's confirmation,
+   which halved throughput at default load (see `before-latency-changes`
+   in [Results](#results-and-comparison)).
 4. **Analytics.** analytics-service consumes `basket.scans` in batches of up
    to 5,000. It inserts the events and moves its cursor in one local
    transaction, which skips duplicates. At a gap it waits for the missing
@@ -243,19 +260,28 @@ while inventory is down, as long as a catalog has been published once.
 
 Measured on the same laptop as earlier assignments: Rust 1.98.0 release
 build, Temurin JDK 21.0.12, ARM64 macOS 27.0, and Kafka 4.3.2 in Docker
-Desktop. Every database uses WAL and `synchronous=FULL` with one commit per
-write (`MAX_BATCH = 1`), as in the submitted Assignment 5. Each workload
-starts from freshly reset databases (2,000 SKUs × 10,000 units) and a
-freshly reset broker (`docker compose down -v`).
+Desktop. Every database uses WAL and `synchronous=FULL`. The submitted
+configuration commits each write on its own (`CHECKOUT_MAX_BATCH` unset,
+so 1), as in the submitted Assignment 5. Each workload starts from freshly
+reset databases (2,000 SKUs × 10,000 units) and a freshly reset broker
+(`docker compose down -v`).
 
-| Run | Scans/s | Completed tx/s | Scan p50 / p95 / p99 (ms) | Complete p50 / p95 / p99 (ms) | Errors |
+| Run | Scans/s | Completed tx/s | Scan p50 / p95 / p99 (ms) | Complete p50 / p95 / p99 (ms) | 409 `INSUFFICIENT_STOCK` |
 | --- | --- | --- | --- | --- | --- |
-| **A6 default (10 × 60 s)** | **1,497.9** | **134.1** | **3.08 / 8.42 / 17.95** | **20.8 / 46.6 / 87.7** | 474 × 409 `INSUFFICIENT_STOCK` |
-| **A6 stress (100 × 120 s)** | **1,547.2** | **93.3** | **23.33 / 118.51 / 688.92** | **67.1 / 230.5 / 1,087.1** | 6,519 × 409 `INSUFFICIENT_STOCK` |
+| **A6 default (10 × 60 s)** | **2,902.8** | **177.9** | **1.06 / 2.89 / 8.23** | **15.0 / 33.0 / 69.3** | 5,978 (36%) |
+| **A6 stress (100 × 120 s)** | **1,601.0** | **93.6** | **21.69 / 117.04 / 605.28** | **44.2 / 225.9 / 1,361.7** | 7,024 (38%) |
+| A6 default, `CHECKOUT_MAX_BATCH=256` | 2,389.8 | 159.7 | 0.91 / 3.06 / 14.64 | 16.0 / 62.3 / 340.0 | 3,946 (29%) |
+| A6 stress, `CHECKOUT_MAX_BATCH=256` | 6,360.1 | 215.3 | 7.49 / 22.59 / 39.75 | 29.4 / 94.7 / 195.3 | 46,905 (64%) |
+| A6 default, before latency changes | 1,497.9 | 134.1 | 3.08 / 8.42 / 17.95 | 20.8 / 46.6 / 87.7 | 474 (6%) |
+| A6 stress, before latency changes | 1,547.2 | 93.3 | 23.33 / 118.51 / 688.92 | 67.1 / 230.5 / 1,087.1 | 6,519 (37%) |
 | A6 default, sequential consumers | 1,155.4 | 110.6 | 2.77 / 8.93 / 33.61 | 19.4 / 63.4 / 190.3 | none |
-| A6 stress, sequential consumers | 1,263.5 | 83.0 | 8.35 / 49.56 / 121.58 | 329.3 / 2,891.4 / 4,185.1 | 4,557 × 409 `INSUFFICIENT_STOCK` |
-| *A5 microservices + HTTP, default* | *5,488.0* | *258.2* | *1.16 / 2.14 / 3.21* | *4.7 / 11.8 / 18.3* | *15,742 × 409, same cause* |
-| *A5 microservices + HTTP, stress* | *4,092.0* | *166.9* | *13.85 / 37.75 / 98.29* | *32 / 82.2 / 221.9* | *26,832 × 409, same cause* |
+| A6 stress, sequential consumers | 1,263.5 | 83.0 | 8.35 / 49.56 / 121.58 | 329.3 / 2,891.4 / 4,185.1 | 4,557 (31%) |
+| *A5 microservices + HTTP, default* | *5,488.0* | *258.2* | *1.16 / 2.14 / 3.21* | *4.7 / 11.8 / 18.3* | *15,742 (50%)* |
+| *A5 microservices + HTTP, stress* | *4,092.0* | *166.9* | *13.85 / 37.75 / 98.29* | *32 / 82.2 / 221.9* | *26,832 (57%)* |
+| *A5, `MAX_BATCH = 256`, default* | *8,757.3* | *348.2* | *0.70 / 1.10 / 1.69* | *– / 9.6 / 13.4* | *29,103 (58%)* |
+| *A5, `MAX_BATCH = 256`, stress* | *11,177.5* | *304.3* | *5.74 / 11.27 / 24.53* | *– / 33.3 / 78.3* | *91,280 (71%)* |
+
+The percentage is the share of completion requests rejected.
 
 ### Correctness
 
@@ -275,46 +301,67 @@ It checks:
   analytics cursor;
 - the published window matches the outbox and the client's top 10.
 
-The only client errors were whole-basket stock rejections after
-`SKU-000001` sold out. There were no transport errors, 5xx responses, saga
-timeouts, recovery re-sends, or lost replies.
+This held for the submitted runs and every comparison run. The only client
+errors were whole-basket stock rejections after popular SKUs sold out.
+There were no transport errors, 5xx responses, saga timeouts, recovery
+re-sends, or lost replies.
 
 ### Performance
 
-- **Every hop now goes through the broker, and the client waits for each
-  one.** The stations are closed loops: each one waits for a response
-  before sending its next request. Latency therefore sets throughput
-  directly. A scan now waits for its SQLite commit and also for the Kafka
-  round trip of its `ItemScanned` event. A completion makes six broker
-  round trips (three commands and three replies). Each round trip is a
-  publish with `acks=all`, a consumer fetch, and a handler commit.
-  - Default load: median scan 3.1 ms (A5: 1.2 ms), median completion
-    20.8 ms (A5: 4.7 ms).
-  - Throughput: 1,498 scans/s at default load and 1,547 under stress, about
-    27% and 38% of Assignment 5.
-- **The commits are the same as in Assignment 5.** A successful completion
-  still makes seven durable commits:
-  - payment: start, lock, pivot, complete;
-  - basket: lock, complete;
-  - inventory: reserve.
+- **The stations are closed loops, so latency sets throughput.** Each
+  station waits for a response before sending its next request. Every
+  millisecond a request spends waiting on the broker is therefore lost
+  throughput.
+- **Two changes removed broker waits from the request path** (compare the
+  `before latency changes` rows).
+  - **Scans no longer wait for Kafka.** A scan is acknowledged after its
+    commit, and the relay publishes it right after. Median scan latency at
+    default load fell from 3.08 ms to 1.06 ms, Assignment 5's level
+    (1.16 ms).
+  - **Completions return at the pivot.** The receipt no longer waits for
+    the `Complete` command and the `BasketCompleted` reply. Median
+    completion fell from 20.8 ms to 15.0 ms.
+  - Together they nearly doubled default-load throughput: 2,903 scans/s
+    against 1,498, now 53% of Assignment 5. Completions are still slower
+    than in Assignment 5 (15 ms against 4.7 ms median), because four broker
+    round trips remain before the pivot. Each one is a publish with
+    `acks=all` across the Docker Desktop VM, a consumer fetch, and a
+    handler commit.
+- **Under stress the limit is basket's commit rate, not the broker.**
+  - With 100 stations, starts and scans queue for basket's single SQLite
+    writer, and each write waits for its own fsync. Median start and scan
+    latency is about 22 ms with or without the latency changes, and
+    throughput stayed at about 1,600 scans/s.
+  - A completion still makes seven durable commits: payment's start, lock,
+    pivot, and complete; basket's lock and complete; and inventory's
+    reserve. Basket's two share the queue with every scan.
+- **Group commit removes that limit.** With `CHECKOUT_MAX_BATCH=256`, the
+  writes queued at a service share one fsync, and every unit is still
+  durable before its caller gets a result. Under stress:
+  - 6,360 scans/s and 215 completed tx/s, 4.0× the submitted
+    configuration;
+  - 1.55× Assignment 5's submitted stress run (4,092 scans/s);
+  - scan p99 fell from 605 ms to 40 ms.
 
-  The added cost is the broker: each round trip crosses the Docker Desktop
-  VM's network twice, and Kafka must store each record before confirming
-  it.
-- **Fewer completions mean fewer stock rejections.** Fewer transactions
-  completed, so `SKU-000001` sold out later. 5.6% of completions were
-  rejected at default load (A5: 50%) and 37% under stress (A5: 57%).
-- **Concurrent consumers removed queueing under stress.** In the first
-  version, each consumer handled one record at a time.
-  - basket's command handler waited for each SQLite commit behind about 100
-    stations' worth of queued scans before it read the next command.
-  - Under stress, completions therefore queued for seconds: p50 329 ms, p99
-    4.2 s.
-  - Handling different keys concurrently, while keeping each key in order,
-    cut completion latency to p50 67 ms and p99 1.09 s, and raised scan
-    throughput by 22%.
-  - Scan and start latency rose under stress because more completions now
-    compete for basket's single writer.
+  At default load it did not help: 2,390 against 2,903 scans/s. With only
+  10 stations, few writes queue up to share a commit, and the difference
+  is within this laptop's run-to-run noise. Assignment 5 with group commit
+  is still faster (8,757 and 11,178 scans/s), because completions there
+  make three HTTP calls instead of four broker round trips. As in
+  Assignment 5, group commit would speed up every architecture, so it is a
+  comparison run, not the submitted configuration.
+- **Concurrent consumers removed queueing behind single records.** In the
+  first version (`sequential consumers`), each consumer handled one record
+  at a time. basket's command consumer waited for each commit behind about
+  100 stations' worth of queued scans before reading the next command, so
+  stress completions took seconds: p50 329 ms, p99 4.2 s. Handling
+  different keys concurrently, while keeping each key in order, cut that
+  to p50 67 ms and p99 1.09 s.
+- **Rejection rates follow how much stock sells.** The more transactions
+  complete, the sooner popular SKUs such as `SKU-000001` sell out, and the
+  more whole baskets are rejected. That is why the rate rose from 6% to 36%
+  at default load after the latency changes, and to 64% under stress with
+  group commit.
 - **The laptop was busier than for earlier assignments.** During these runs,
   other workloads kept about 4 of the 10 cores busy: a separate Docker
   container, the IDE, and macOS storage indexing. The load average was
@@ -337,8 +384,10 @@ timeouts, recovery re-sends, or lost replies.
       offsets must be stored only after replies are confirmed.
     - **Request-reply over a broker.** The synchronous client API needs a
       waiter and a timeout in payment.
-    - **Latency on every hop**, which closed-loop clients turn into lower
-      throughput.
+    - **Latency on every hop.** Closed-loop clients turn it into lower
+      throughput, which is why the latency changes trade Assignment 5's
+      read-your-writes guarantee for analytics, and the immediate
+      `COMPLETED` basket status, for fewer waits.
 
 ## Build, test, and run
 
@@ -378,12 +427,17 @@ docker compose -f event-based/docker-compose.yml up -d --wait
 cargo test --locked --manifest-path event-based/Cargo.toml
 cargo clippy --locked --manifest-path event-based/Cargo.toml --workspace --all-targets -- -D warnings
 ./event-based/load-tests.sh     # LOAD_MODES=stress to run one workload
+CHECKOUT_MAX_BATCH=256 LOAD_VARIANT=group-commit-256 ./event-based/load-tests.sh   # comparison run
 ```
 
 The 15 system tests run every service in-process against the real broker.
 Each test gets its own temporary databases and its own topic prefix, so
 tests do not share topics or consumer groups. The services are wired only
 through Kafka, and the tests drive them through the gateway over TCP.
+Scans and receipts are acknowledged before their follow-up events are
+applied. So before reading analytics, a test waits for basket's relay to
+publish every committed scan, and it polls for a basket to reach
+`COMPLETED` after its receipt.
 Eleven tests are carried over from Assignment 5:
 
 - the API contract, validation, and 404/405 responses;

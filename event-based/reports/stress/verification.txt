@@ -1,6 +1,6 @@
 PASS: integrity and foreign keys in all 4 databases; inventory conservation for all 2000 SKUs; basket totals and catalog replica; every saga finished; completed baskets = completed sagas = active reservations = payments (per SKU and in cents); stock refusals = aborted sagas; scan outbox = Kafka scan topic = analytics cursor; hopping-window metadata/ranks
-Completed transactions: 11231; purchased units: 105153; accepted scans: 186264
-Aborted sagas by cause: {'INSUFFICIENT_STOCK': 6519}
-Reservations: 11231 reserved, 6519 rejected; scan topic records: 186264
-Latest window: 185001..186000; retained scans in analytics: 1264
+Completed transactions: 11252; purchased units: 104135; accepted scans: 192466
+Aborted sagas by cause: {'INSUFFICIENT_STOCK': 7024}
+Reservations: 11252 reserved, 7024 rejected; scan topic records: 192466
+Latest window: 191001..192000; retained scans in analytics: 1466
 Out-of-stock SKUs: 1

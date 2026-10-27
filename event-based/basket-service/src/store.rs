@@ -87,9 +87,8 @@ impl Store {
     }
 
     /// Adds one unit and appends its scan event in one local transaction, so
-    /// an event exists exactly when a scan is accepted. Returns the event's
-    /// outbox sequence too.
-    pub fn scan(&self, id: i64, sku: &str) -> Result<(Basket, CatalogItem, i64)> {
+    /// an event exists exactly when a scan is accepted.
+    pub fn scan(&self, id: i64, sku: &str) -> Result<(Basket, CatalogItem)> {
         self.db.write(|c| {
             if basket(c, id)?.status != "OPEN" {
                 return Err(not_open());
@@ -116,8 +115,7 @@ impl Store {
             .execute(params![item.cents, id])?;
             c.prepare_cached("INSERT INTO scan_events(sku, name) VALUES (?1, ?2)")?
                 .execute(params![item.sku, item.name])?;
-            let sequence = c.last_insert_rowid();
-            Ok((basket(c, id)?, item, sequence))
+            Ok((basket(c, id)?, item))
         })
     }
 

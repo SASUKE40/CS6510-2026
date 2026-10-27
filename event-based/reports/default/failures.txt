@@ -1,2 +1,2 @@
-INSUFFICIENT_STOCK (HTTP 409): 474
+INSUFFICIENT_STOCK (HTTP 409): 5978
 All client-recorded errors accounted for.

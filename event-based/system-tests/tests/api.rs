@@ -50,10 +50,7 @@ async fn catalog_receipt_validation_and_stock() {
     chrono::DateTime::parse_from_rfc3339(receipt["completedAt"].as_str().unwrap()).unwrap();
     assert_eq!(app.complete(&id).await.1["error"], "TRANSACTION_NOT_OPEN");
     assert_eq!(app.scan(&id, "SKU-000001").await.0, 409);
-    assert_eq!(
-        app.get(&format!("/transactions/{id}")).await["status"],
-        "COMPLETED"
-    );
+    app.completed(&id).await;
     let alerts = app.get("/inventory/low-stock?threshold=2").await;
     assert_eq!(alerts["alerts"][0]["currentStock"], 0);
     assert_eq!(alerts["alerts"].as_array().unwrap().len(), 1);
@@ -216,10 +213,7 @@ async fn restarted_services_recover_state_and_reset_reseeds() {
     assert_eq!(app.complete(&id).await.0, 200);
     drop(app);
     let app = launch(&dbs, &config, false).await;
-    assert_eq!(
-        app.get(&format!("/transactions/{id}")).await["status"],
-        "COMPLETED"
-    );
+    app.completed(&id).await;
     assert_eq!(app.stock("SKU-000001").await, 9998);
     drop(app);
     // Each service validates its own settings against its own database.
@@ -378,8 +372,7 @@ async fn scan_racing_completion_across_services_cannot_change_a_paid_basket() {
             code => panic!("unexpected scan response {code}"),
         };
         assert_eq!(paid.1["itemCount"], expected_count);
-        let state = app.get(&format!("/transactions/{id}")).await;
-        assert_eq!(state["status"], "COMPLETED");
+        let state = app.completed(&id).await;
         assert_eq!(state["itemCount"], paid.1["itemCount"]);
         assert_eq!(state["runningTotal"], paid.1["totalAmount"]);
     }

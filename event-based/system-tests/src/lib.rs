@@ -158,6 +158,7 @@ pub struct System {
     pub payment: Arc<Payment>,
     consumers: Mutex<HashMap<&'static str, tokio::task::JoinHandle<()>>>,
     tasks: Vec<tokio::task::JoinHandle<()>>,
+    relay: basket_service::Relay,
     _relay: AbortOnDrop,
 }
 
@@ -205,7 +206,7 @@ pub async fn launch(dbs: &Dbs, config: &Config, reset: bool) -> System {
     let (relay, relay_task) = basket_service::start_relay(basket_store.clone(), bus.clone())
         .await
         .unwrap();
-    let (basket, b) = listen(basket_service::router(basket_store.clone(), relay)).await;
+    let (basket, b) = listen(basket_service::router(basket_store.clone(), relay.clone())).await;
 
     if reset {
         payment_service::Store::open(&dbs.path("payment"), true).unwrap();
@@ -245,6 +246,7 @@ pub async fn launch(dbs: &Dbs, config: &Config, reset: bool) -> System {
         payment,
         consumers: Mutex::new(HashMap::new()),
         tasks: vec![a, b, c, d],
+        relay,
         _relay: relay_task,
     };
     for service in ["inventory", "basket", "payment", "analytics"] {
@@ -328,7 +330,21 @@ impl System {
     pub async fn request(&self, method: &str, path: &str, body: Value) -> (u16, Value) {
         self.raw(method, path, &body.to_string()).await
     }
+    /// Waits until basket's relay has published every committed scan. Scans
+    /// are acknowledged before their events reach Kafka, so a test reads
+    /// analytics only after this, as a later reader would.
+    pub async fn relayed(&self) {
+        let last = self.basket.last_sequence().unwrap();
+        assert!(
+            self.relay.wait_for(last, Duration::from_secs(15)).await,
+            "scans up to {last} were not relayed"
+        );
+    }
+    /// GETs `path`, expecting 200. Analytics reads first wait for the relay.
     pub async fn get(&self, path: &str) -> Value {
+        if path.starts_with("/analytics") {
+            self.relayed().await;
+        }
         let (code, data) = self.request("GET", path, Value::Null).await;
         assert_eq!(code, 200, "GET {path}: {data}");
         data
@@ -371,6 +387,18 @@ impl System {
             .find(|a| a["sku"] == sku)
             .map(|a| a["currentStock"].as_i64().unwrap())
             .unwrap()
+    }
+    /// Polls `GET /transactions/{id}` until the basket is `COMPLETED`, for up
+    /// to 15 s. The receipt is sent at the pivot, before basket completes.
+    pub async fn completed(&self, id: &str) -> Value {
+        for _ in 0..1500 {
+            let state = self.get(&format!("/transactions/{id}")).await;
+            if state["status"] == "COMPLETED" {
+                return state;
+            }
+            tokio::time::sleep(Duration::from_millis(10)).await;
+        }
+        panic!("{id} never became COMPLETED");
     }
     /// The state of one saga in the payment log.
     pub fn saga(&self, id: i64) -> payment_service::Saga {

@@ -22,4 +22,4 @@ __pycache__/
 /microservices/reports/*/client.log
 /event-based/target/
 /event-based/data/
-/event-based/reports/*/client.log
+/event-based/reports/**/client.log

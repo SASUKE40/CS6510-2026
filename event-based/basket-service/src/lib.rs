@@ -32,9 +32,6 @@ use tokio::sync::{Notify, mpsc, watch};
 
 pub const NAME: &str = "basket-service";
 const RELAY_BATCH: i64 = 5_000;
-/// How long a scan waits for its event to reach Kafka before it is
-/// acknowledged anyway; the outbox still delivers it later.
-const RELAY_WAIT: Duration = Duration::from_secs(5);
 
 /// Rebuilds the catalog replica from the latest `CatalogPublished` event.
 /// Waits up to `wait` for one on first start; with a replica already
@@ -90,6 +87,11 @@ pub struct Relay {
 impl Relay {
     pub fn published(&self) -> i64 {
         *self.published.borrow()
+    }
+
+    /// Tells the relay a scan has committed.
+    pub fn wake(&self) {
+        self.wake.notify_one();
     }
 
     /// Waits until every event up to `sequence` is in Kafka, or `timeout`.
@@ -353,8 +355,9 @@ async fn status(State(app): State<App>, Path(id): Path<String>) -> ApiResult<Jso
 struct Scan {
     sku: String,
 }
-/// A scan is acknowledged once its event is in Kafka, so analytics can
-/// count every acknowledged scan.
+/// A scan is acknowledged once it and its outbox event are committed; the
+/// relay publishes the event to Kafka right after, so analytics trails the
+/// acknowledged scans by the relay's latency.
 async fn scan(
     State(app): State<App>,
     Path(id): Path<String>,
@@ -363,10 +366,8 @@ async fn scan(
     let sku = body(input)?.sku;
     let id = parse_transaction_id(&id)?;
     let store = app.store.clone();
-    let (basket, item, sequence) = blocking(move || store.scan(id, &sku)).await?;
-    if !app.relay.wait_for(sequence, RELAY_WAIT).await {
-        eprintln!("{NAME}: scan {sequence} acknowledged before reaching Kafka");
-    }
+    let (basket, item) = blocking(move || store.scan(id, &sku)).await?;
+    app.relay.wake();
     Ok(Json(
         json!({"transactionId": format!("tx-{id}"), "sku": item.sku, "name": item.name,
             "unitPrice": money(item.cents), "itemCount": basket.count, "runningTotal": money(basket.cents)}),

@@ -4,22 +4,32 @@ use crate::error::{Error, Result};
 use rusqlite::{Connection, OpenFlags, TransactionBehavior};
 use std::{
     sync::{
-        Arc, Condvar, Mutex,
+        Arc, Condvar, Mutex, OnceLock,
         atomic::{AtomicUsize, Ordering},
     },
     time::Duration,
 };
 
-/// Most units of work one commit may cover. At 1 every unit commits and
-/// fsyncs on its own; larger values let queued writers share one fsync.
-const MAX_BATCH: usize = 1;
+/// Most units of work one commit may cover: `CHECKOUT_MAX_BATCH`, default 1.
+/// At 1 every unit commits and fsyncs on its own; larger values let queued
+/// writers share one fsync.
+fn max_batch() -> usize {
+    static MAX_BATCH: OnceLock<usize> = OnceLock::new();
+    *MAX_BATCH.get_or_init(|| {
+        std::env::var("CHECKOUT_MAX_BATCH")
+            .ok()
+            .and_then(|v| v.parse().ok())
+            .filter(|&n| n >= 1)
+            .unwrap_or(1)
+    })
+}
 
 /// One writer and one reader connection. WAL lets reads proceed while a
 /// write is in progress, so feed and lookup queries never queue behind scans.
 ///
 /// Writes can be group-committed: each unit of work runs in its own savepoint
 /// inside a shared transaction, and the last writer in line, or the one that
-/// fills the batch to `MAX_BATCH`, commits for the whole batch. No caller
+/// fills the batch to [`max_batch`], commits for the whole batch. No caller
 /// returns before the commit covering its work, and readers only see
 /// committed data.
 pub struct Database {
@@ -116,7 +126,7 @@ impl Database {
             outcome.finish(Err(Error::unavailable("write batch was rolled back")));
         } else {
             current.size += 1;
-            if self.queued.load(Ordering::SeqCst) == 0 || current.size >= MAX_BATCH {
+            if self.queued.load(Ordering::SeqCst) == 0 || current.size >= max_batch() {
                 let committed = connection.execute_batch("COMMIT").map_err(Error::from);
                 if committed.is_err() && !connection.is_autocommit() {
                     let _ = connection.execute_batch("ROLLBACK");
