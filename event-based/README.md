@@ -281,7 +281,8 @@ reset databases (2,000 SKUs × 10,000 units) and a freshly reset broker
 | *A5, `MAX_BATCH = 256`, default* | *8,757.3* | *348.2* | *0.70 / 1.10 / 1.69* | *– / 9.6 / 13.4* | *29,103 (58%)* |
 | *A5, `MAX_BATCH = 256`, stress* | *11,177.5* | *304.3* | *5.74 / 11.27 / 24.53* | *– / 33.3 / 78.3* | *91,280 (71%)* |
 
-The percentage is the share of completion requests rejected.
+The percentage is the share of completion requests rejected. A short
+summary of why performance improved is in [`PERFORMANCE.md`](PERFORMANCE.md).
 
 ### Correctness
 
