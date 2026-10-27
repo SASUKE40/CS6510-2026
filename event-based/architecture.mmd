@@ -1,0 +1,53 @@
+%% Assignment 6: event-based self-checkout. Text version of the hand-drawn
+%% architecture.svg / architecture.png; preview with
+%%   npx -y @mermaid-js/mermaid-cli -i architecture.mmd -o /tmp/architecture.svg
+flowchart TB
+    client(["Load client (unchanged Java)"])
+    gateway["checkout-gateway :8080<br/>routes public HTTP only · /internal → 404"]
+
+    subgraph services["Microservices: one process and one private SQLite database each; no service-to-service HTTP"]
+        direction LR
+        inventory["inventory-service :8081<br/>stock, reservations<br/>🗄 inventory.sqlite"]
+        payment["payment-service :8083<br/>saga orchestrator<br/>🗄 payment.sqlite"]
+        basket["basket-service :8082<br/>baskets, catalog replica,<br/>scan outbox + relay<br/>🗄 basket.sqlite"]
+        analytics["analytics-service :8084<br/>hopping window<br/>🗄 analytics.sqlite"]
+    end
+
+    subgraph kafka["Apache Kafka 4.3 event broker (KRaft, Docker) · topics checkout.* · 1 partition each"]
+        direction LR
+        tInvEvt[["inventory.events<br/>StockReserved · StockRejected<br/>ReservationCancelled"]]
+        tInvCmd[["inventory.commands<br/>Reserve · Cancel"]]
+        tCatalog[["inventory.catalog<br/>CatalogPublished<br/>(compacted)"]]
+        tBasketCmd[["basket.commands<br/>Checkout · Release<br/>Complete"]]
+        tBasketEvt[["basket.events<br/>BasketLocked · BasketReleased<br/>BasketCompleted · *Rejected"]]
+        tScans[["basket.scans<br/>ItemScanned"]]
+    end
+
+    client -->|HTTP :8080| gateway
+    gateway -->|"GET /items<br/>GET /inventory/low-stock"| inventory
+    gateway -->|"POST /transactions/{id}/complete"| payment
+    gateway -->|"POST /transactions, …/items<br/>GET /transactions/{id}"| basket
+    gateway -->|"GET /analytics/popular-items"| analytics
+
+    payment ==>|command| tInvCmd
+    tInvCmd ==>|consume| inventory
+    inventory ==>|reply| tInvEvt
+    tInvEvt ==>|consume| payment
+
+    inventory -.->|publish at startup| tCatalog
+    tCatalog -.->|consume| basket
+
+    payment ==>|command| tBasketCmd
+    tBasketCmd ==>|consume| basket
+    basket ==>|reply| tBasketEvt
+    tBasketEvt ==>|consume| payment
+
+    basket -.->|outbox relay| tScans
+    tScans -.->|consume| analytics
+
+    classDef svc fill:#e8f1ff,stroke:#3567b5,color:#0b2147
+    classDef topic fill:#eafbea,stroke:#3a9a3a,color:#0d330d
+    classDef edge fill:#f3f3f3,stroke:#666,color:#111
+    class inventory,basket,payment,analytics svc
+    class tCatalog,tScans,tBasketCmd,tBasketEvt,tInvCmd,tInvEvt topic
+    class client,gateway edge

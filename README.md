@@ -1,5 +1,12 @@
 # Self-Checkout Supermarket assignments
 
+- **Assignment 6 — Event-based:** [`event-based/`](event-based/) keeps the
+  Assignment 5 microservices but replaces every service-to-service HTTP call
+  with Kafka topics. The checkout saga runs on commands and reply events, the
+  catalog replica and the scan feed are published events, and a routing-only
+  gateway still serves the unchanged HTTP API. The directory contains both
+  required load-test JSON reports and the architecture diagram.
+  Submit <https://github.com/SASUKE40/CS6510-2026/tree/main/event-based>.
 - **Assignment 5 — Microservices:** [`microservices/`](microservices/) makes
   the four services independently deployable, each with its own SQLite
   database. Checkout is an orchestrated saga (payment drives basket and
