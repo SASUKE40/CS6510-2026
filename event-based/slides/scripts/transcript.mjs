@@ -28,7 +28,10 @@ for (const slide of deck.slides) {
   const [first, ...rest] = note.split('\n')
   const tag = first.match(/^\[(\d+:\d{2}|backup)\]$/)?.[1]
   const page = slide.index + 1
-  const title = (slide.title ?? `Slide ${page}`).replace(/<[^>]+>/g, '').trim()
+  const title = (slide.title ?? `Slide ${page}`)
+    .replace(/<[^>]+>/g, '')
+    .replace(/\s*\{[^}]*\}\s*$/, '')
+    .trim()
   if (!tag) {
     warnings.push(`slide ${page} (${title}): note has no [m:ss] or [backup] tag`)
     continue

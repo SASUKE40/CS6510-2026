@@ -242,7 +242,7 @@ hotkey: b
 Kafka transactions make a cycle atomic only inside Kafka.
 My handlers also write to SQLite.
 Kafka cannot put the SQLite commit in the same transaction.
-Thus, a crash can occur between the database commit and the offset commit.
+So a crash can still happen between the database commit and the offset commit.
 For this reason, I accept redelivery.
 Each handler is idempotent.
 Payment uses compare-and-set.

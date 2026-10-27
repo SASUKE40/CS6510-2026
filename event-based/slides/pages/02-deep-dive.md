@@ -179,7 +179,7 @@ If the stock is not sufficient, payment sends Release, and the client gets 409.
 If the stock is reserved, payment records the payment.
 This step is the pivot.
 After the pivot, the saga cannot go back.
-Thus, the client gets the receipt at the pivot.
+So the client gets the receipt right at the pivot.
 Basket completes a few milliseconds later.
 -->
 
@@ -269,7 +269,7 @@ It records the payment, answers the client, and sends Complete.
 Every transition is a compare-and-set in SQL.
 The update has the expected state in its WHERE clause.
 If a reply is a duplicate, the state is already different.
-Thus, the update changes zero rows, and payment sends no command.
+So the update changes zero rows, and payment sends no command.
 Any other pair is stale, and payment ignores it.
 -->
 
@@ -377,7 +377,7 @@ A command waited behind about 100 stations of scans.
 The second version keeps order only per key.
 It takes a slot from a semaphore, so a maximum of 64 records run at the same time.
 A new task with the same key waits for the previous task with that key.
-Thus, the commands of one saga stay in order, and different keys run in parallel.
+That way, the commands of one saga stay in order, and different keys run in parallel.
 The submitted version adds an acker task.
 The acker waits for each reply to reach Kafka.
 Only then does it store the offset, in topic order.
@@ -492,16 +492,16 @@ pub fn scan(&self, id: i64, sku: &str) -> Result<..> {
 
 <!--
 [0:50]
-Now the specific case: the popular-items window.
-It starts with a scan of tx-42.
-Basket checks that the basket is open and finds the SKU in its local catalog.
-It adds the line and writes one outbox row, in the same transaction.
-The outbox sequence has no gaps and follows the commit order.
-This sequence is the global scan number.
-Basket answers the client right after the commit.
-A relay task reads the outbox in order and publishes each row to the scan topic.
-If a delivery fails, the relay goes back to the last confirmed sequence.
-Analytics consumes the topic in batches of up to 5,000 events.
+Let's go back to the scans of tx-42. They feed the popular-items window.
+All of this runs in one local transaction.
+Basket-service checks that the basket is open and looks up the SKU in its local catalog.
+It adds the line, bumps the total, and writes one outbox row.
+The outbox sequence has no gaps and follows the commit order, so it works as a global scan number.
+The client gets its answer right after the commit.
+Then a relay task publishes the outbox rows to the scan topic, in order.
+If a delivery fails, it goes back to the last confirmed sequence.
+After a restart, it picks up from the last sequence in the topic.
+On the other side, analytics reads the topic in batches of up to 5,000.
 -->
 
 ---

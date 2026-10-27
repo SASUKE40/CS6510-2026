@@ -35,14 +35,14 @@ Part three is reflections.
 This chart compares all six assignments under the same load test.
 It shows completed transactions per second.
 Each station waits for a response before it sends the next request.
-Thus, each millisecond of wait reduces the throughput.
+So every millisecond of wait cuts the throughput.
 At default load, A1 to A5 complete about 250 transactions per second.
 A6 completes 221, the lowest value.
 Four broker hops, that is two request-reply round trips, come before the pivot.
 Under stress, A6 completes 232 per second, the highest value.
 It also has the most scans: 7,239 per second.
 Group commit lets queued writes share one fsync.
-Thus, the basket SQLite writer is not the limit.
+That means the basket SQLite writer is no longer the limit.
 But group commit is a configuration, not an architecture.
 A1 to A5 commit each write alone. With group commit, A5 reaches 304 per second under stress.
 All A6 runs passed the cross-database verifier.

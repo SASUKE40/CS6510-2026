@@ -92,7 +92,7 @@ It knows only the topic names.
 If a service is down, its commands wait in Kafka.
 The request does not fail at once.
 The cost is at-least-once delivery.
-Thus, every handler must be idempotent.
+So every handler has to be idempotent.
 The load client, the public API, and the databases did not change.
 -->
 
@@ -180,12 +180,12 @@ Blue items are commands, and orange items are replies.
 Payment sends commands to basket and to inventory.
 Basket and inventory send replies to payment.
 The key is the transaction id or the saga id.
-Thus, all messages for one saga stay in order.
+That way, all messages for one saga stay in order.
 There are also two data feeds.
 The catalog topic is compacted, and basket reads the newest catalog at startup.
 The scan topic carries one event for each accepted scan.
 A rejection reply carries the same error code as before.
-Thus, the client sees the same errors as in Assignment 5.
+So the client sees the same errors as in Assignment 5.
 -->
 
 ---
