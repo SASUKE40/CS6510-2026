@@ -4,9 +4,10 @@
 //! Choreography, not orchestration: no service calls this one, and it calls
 //! none. It consumes basket's `ItemScanned` events from Kafka as they
 //! arrive. Before answering a read it waits until it has ingested the newest
-//! scan in the topic; basket acknowledges a scan only once its event is in
-//! Kafka, so an answer reflects every acknowledged scan. If Kafka is
-//! unreachable, the last published snapshot is served.
+//! scan in the topic. basket acknowledges a scan once its outbox row commits
+//! and relays the event right after, so an answer can trail the newest
+//! acknowledged scans by the relay's latency. If Kafka is unreachable, the
+//! last published snapshot is served.
 pub mod store;
 
 use axum::{

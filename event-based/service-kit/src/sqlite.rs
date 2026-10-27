@@ -10,9 +10,9 @@ use std::{
     time::Duration,
 };
 
-/// Most units of work one commit may cover: `CHECKOUT_MAX_BATCH`, default 1.
-/// At 1 every unit commits and fsyncs on its own; larger values let queued
-/// writers share one fsync.
+/// Most units of work one commit may cover: `CHECKOUT_MAX_BATCH`, default 256.
+/// Queued writers share one fsync; at 1 every unit commits and fsyncs on its
+/// own.
 fn max_batch() -> usize {
     static MAX_BATCH: OnceLock<usize> = OnceLock::new();
     *MAX_BATCH.get_or_init(|| {
@@ -20,7 +20,7 @@ fn max_batch() -> usize {
             .ok()
             .and_then(|v| v.parse().ok())
             .filter(|&n| n >= 1)
-            .unwrap_or(1)
+            .unwrap_or(256)
     })
 }
 

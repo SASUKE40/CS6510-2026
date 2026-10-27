@@ -1,0 +1,3 @@
+analytics-service: Settings { window_size: 1000, slide_interval: 500 }, consuming checkout.basket.scans
+analytics-service listening on http://127.0.0.1:8084
+analytics-service: final window 174001..175000 published

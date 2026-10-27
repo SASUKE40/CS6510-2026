@@ -1,3 +1,3 @@
 basket-service: catalog replica refreshed with 2000 items
 basket-service: relaying scans after #0
-basket-service listening on http://127.0.0.1:8082
+basket-service listening on http://127.0.0.1:9182

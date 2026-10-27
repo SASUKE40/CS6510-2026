@@ -4,7 +4,7 @@
 # freshly reset per-service databases, then verifies all four stopped
 # databases together with the scan topic. LOAD_VARIANT=name writes into
 # reports/<mode>/<name>/ instead, for comparison runs (e.g. with
-# CHECKOUT_MAX_BATCH=256).
+# CHECKOUT_MAX_BATCH=1).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 source event-based/scripts/services.sh

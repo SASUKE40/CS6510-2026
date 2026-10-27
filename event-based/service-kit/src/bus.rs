@@ -120,24 +120,31 @@ fn kafka(error: impl std::fmt::Display) -> Error {
 
 #[derive(Clone)]
 pub struct Bus {
+    /// Saga commands and replies: a waiting checkout is on their path.
     producer: FutureProducer,
+    /// Scans and catalog snapshots: nothing waits on them, so they batch.
+    bulk: FutureProducer,
     bootstrap: String,
     prefix: String,
+}
+
+fn producer(bootstrap: &str, linger_ms: &str) -> Result<FutureProducer> {
+    client_config(bootstrap)
+        .set("acks", "all")
+        .set("enable.idempotence", "true")
+        .set("linger.ms", linger_ms)
+        .set("message.timeout.ms", "60000")
+        .create()
+        .map_err(kafka)
 }
 
 impl Bus {
     /// Connects to `bootstrap` and creates any missing topic under `prefix`,
     /// waiting up to `wait` for the broker to answer.
     pub async fn connect(bootstrap: &str, prefix: &str, wait: Duration) -> Result<Self> {
-        let producer = client_config(bootstrap)
-            .set("acks", "all")
-            .set("enable.idempotence", "true")
-            .set("linger.ms", "1")
-            .set("message.timeout.ms", "60000")
-            .create()
-            .map_err(kafka)?;
         let bus = Self {
-            producer,
+            producer: producer(bootstrap, "0")?,
+            bulk: producer(bootstrap, "5")?,
             bootstrap: bootstrap.to_owned(),
             prefix: prefix.to_owned(),
         };
@@ -197,13 +204,19 @@ impl Bus {
         }
     }
 
-    /// Enqueues a record behind everything enqueued before it. The returned
-    /// future resolves once Kafka has stored the record.
+    /// Enqueues a record behind everything enqueued before it on the same
+    /// topic. The returned future resolves once Kafka has stored the record.
     pub fn send(&self, record: &Outgoing) -> Result<Pending> {
         let name = self.name(record.topic);
         let payload = record.value.to_string();
-        let delivery = self
-            .producer
+        let producer = match record.topic {
+            Topic::Scans | Topic::Catalog => &self.bulk,
+            Topic::BasketCommands
+            | Topic::BasketEvents
+            | Topic::InventoryCommands
+            | Topic::InventoryEvents => &self.producer,
+        };
+        let delivery = producer
             .send_result(FutureRecord::to(&name).key(&record.key).payload(&payload))
             .map_err(|(error, _)| kafka(error))?;
         Ok(Box::pin(async move {
@@ -222,11 +235,15 @@ impl Bus {
 
     /// Waits until every enqueued record is delivered (used at shutdown).
     pub async fn flush(&self) -> Result<()> {
-        let producer = self.producer.clone();
-        tokio::task::spawn_blocking(move || producer.flush(REQUEST_TIMEOUT))
-            .await
-            .map_err(Error::internal)?
-            .map_err(kafka)
+        let producers = [self.producer.clone(), self.bulk.clone()];
+        tokio::task::spawn_blocking(move || {
+            producers
+                .iter()
+                .try_for_each(|producer| producer.flush(REQUEST_TIMEOUT))
+        })
+        .await
+        .map_err(Error::internal)?
+        .map_err(kafka)
     }
 
     /// The offset the next record of `topic` will get.
