@@ -1,167 +1,209 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1730" height="900" viewBox="0 0 1730 900" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
-  <title>Assignment 6: event-based self-checkout microservices with a Kafka event broker</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1134" viewBox="0 0 1800 1134" font-family="Arial, Helvetica, sans-serif">
+  <title>Event-based self-checkout: four microservices that communicate only through a Kafka event broker</title>
   <defs>
-    <marker id="a-grey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker>
-    <marker id="a-cmd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d9822b"/></marker>
-    <marker id="a-evt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3567b5"/></marker>
-    <marker id="a-str" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2f9e44"/></marker>
+    <marker id="arrow-blue" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" fill="#2F80ED"/></marker>
+    <marker id="arrow-orange" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" fill="#FF7900"/></marker>
+    <marker id="arrow-grey" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" fill="#BDBDBD"/></marker>
+    <g id="icon-db" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="12" cy="5" rx="10" ry="4"/>
+      <path d="M2,5 V19 A10,4 0 0 0 22,19 V5"/>
+      <path d="M2,12 A10,4 0 0 0 22,12"/>
+    </g>
   </defs>
-  <rect width="1730" height="900" fill="#ffffff"/>
+  <rect width="1800" height="1134" fill="#000000"/>
 
-  <!-- client and gateway -->
-  <rect x="595" y="16" width="260" height="50" rx="25" fill="#f3f3f3" stroke="#666"/>
-  <text x="725" y="38" text-anchor="middle" font-size="15" font-weight="600">Load client</text>
-  <text x="725" y="56" text-anchor="middle" font-size="12" fill="#444">unchanged Java, --baseUrl=http://localhost:8080</text>
-  <line x1="725" y1="66" x2="725" y2="112" stroke="#555" stroke-width="1.6" marker-end="url(#a-grey)"/>
-  <text x="733" y="94" font-size="12" fill="#444">HTTP</text>
+  <!-- title -->
+  <text x="900" y="62" text-anchor="middle" font-size="50" font-weight="700" fill="#FF7900">Event-Based Self-Checkout</text>
+  <text x="900" y="100" text-anchor="middle" font-size="24" fill="#F5F5F5">Microservices never call each other. Every interaction is an event in Kafka.</text>
 
-  <rect x="535" y="114" width="380" height="56" rx="6" fill="#f3f3f3" stroke="#666"/>
-  <text x="725" y="138" text-anchor="middle" font-size="15" font-weight="600">checkout-gateway :8080</text>
-  <text x="725" y="157" text-anchor="middle" font-size="12" fill="#444">routes public HTTP to the owning service · /internal/* → 404</text>
+  <g transform="translate(0,24)">
+  <!-- ===== connectors (drawn before cards) ===== -->
+  <!-- client to gateway -->
+  <path d="M84,240 V466" fill="none" stroke="#BDBDBD" stroke-width="2.5" stroke-dasharray="8 9" stroke-linecap="round" marker-end="url(#arrow-grey)"/>
+  <text x="98" y="360" font-size="20" fill="#D6D6D6">HTTP</text>
+  <text x="98" y="384" font-size="20" fill="#D6D6D6">:8080</text>
 
-  <g stroke="#555" stroke-width="1.6" fill="none">
-    <path d="M725,170 V196 H230 V228" marker-end="url(#a-grey)"/>
-    <path d="M725,196 H560 V228" marker-end="url(#a-grey)"/>
-    <path d="M725,196 H890 V228" marker-end="url(#a-grey)"/>
-    <path d="M725,196 H1220 V228" marker-end="url(#a-grey)"/>
+  <!-- gateway to services (public routes) -->
+  <g fill="none" stroke="#BDBDBD" stroke-width="2.5" stroke-dasharray="8 9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M276,545 H296 V138 H1520"/>
+    <path d="M380,138 V152" marker-end="url(#arrow-grey)"/>
+    <path d="M1520,138 V152" marker-end="url(#arrow-grey)"/>
+    <path d="M296,545 V968 H1050"/>
+    <path d="M380,968 V950" marker-end="url(#arrow-grey)"/>
+    <path d="M1050,968 V950" marker-end="url(#arrow-grey)"/>
+  </g>
+  <circle cx="296" cy="545" r="5" fill="#BDBDBD"/>
+  <text x="420" y="128" font-size="20" fill="#D6D6D6">public HTTP: the gateway routes each path to the service that owns it</text>
+
+  <!-- service to broker: publish (blue, arrow at broker) and consume (orange, arrow at service) -->
+  <g fill="none" stroke-width="2.5" stroke-linecap="round">
+    <!-- payment (top) -->
+    <path d="M458,300 V366" stroke="#2F80ED" marker-end="url(#arrow-blue)"/>
+    <path d="M694,370 V304" stroke="#FF7900" marker-end="url(#arrow-orange)"/>
+    <path d="M1166,300 V366" stroke="#2F80ED" marker-end="url(#arrow-blue)"/>
+    <path d="M1402,370 V304" stroke="#FF7900" marker-end="url(#arrow-orange)"/>
+    <!-- analytics (top) -->
+    <path d="M1638,370 V304" stroke="#FF7900" stroke-dasharray="8 9" marker-end="url(#arrow-orange)"/>
+    <!-- inventory (bottom) -->
+    <path d="M458,720 V786" stroke="#FF7900" marker-end="url(#arrow-orange)"/>
+    <path d="M694,790 V724" stroke="#2F80ED" marker-end="url(#arrow-blue)"/>
+    <path d="M880,790 V724" stroke="#2F80ED" stroke-dasharray="8 9" marker-end="url(#arrow-blue)"/>
+    <!-- basket (bottom) -->
+    <path d="M1030,720 V786" stroke="#FF7900" stroke-dasharray="8 9" marker-end="url(#arrow-orange)"/>
+    <path d="M1166,720 V786" stroke="#FF7900" marker-end="url(#arrow-orange)"/>
+    <path d="M1402,790 V724" stroke="#2F80ED" marker-end="url(#arrow-blue)"/>
+    <path d="M1638,790 V724" stroke="#2F80ED" stroke-dasharray="8 9" marker-end="url(#arrow-blue)"/>
+  </g>
+  <g fill="#FF7900">
+    <circle cx="458" cy="370" r="5"/><circle cx="694" cy="370" r="5"/><circle cx="1166" cy="370" r="5"/>
+    <circle cx="1402" cy="370" r="5"/><circle cx="1638" cy="370" r="5"/>
+    <circle cx="458" cy="720" r="5"/><circle cx="694" cy="720" r="5"/><circle cx="880" cy="720" r="5"/>
+    <circle cx="1030" cy="720" r="5"/><circle cx="1166" cy="720" r="5"/><circle cx="1402" cy="720" r="5"/>
+    <circle cx="1638" cy="720" r="5"/>
   </g>
 
-  <!-- services -->
-  <g font-size="12">
-    <rect x="105" y="230" width="250" height="120" rx="8" fill="#e8f1ff" stroke="#3567b5" stroke-width="1.5"/>
-    <text x="230" y="254" text-anchor="middle" font-size="15" font-weight="700" fill="#0b2147">inventory-service :8081</text>
-    <text x="230" y="274" text-anchor="middle" fill="#0b2147">stock and reservations</text>
-    <text x="230" y="300" text-anchor="middle" fill="#555">GET /items</text>
-    <text x="230" y="316" text-anchor="middle" fill="#555">GET /inventory/low-stock</text>
+  <!-- ===== client ===== -->
+  <g fill="none" stroke="#BDBDBD" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(60,170)">
+    <rect x="2" y="4" width="44" height="30" rx="4"/>
+    <path d="M24,34 V42 M14,44 H34"/>
+  </g>
+  <text x="120" y="192" font-size="22" font-weight="700" fill="#F5F5F5">Load client</text>
+  <text x="120" y="218" font-size="20" fill="#D6D6D6">unchanged Java</text>
 
-    <rect x="435" y="230" width="250" height="120" rx="8" fill="#e8f1ff" stroke="#3567b5" stroke-width="1.5"/>
-    <text x="560" y="254" text-anchor="middle" font-size="15" font-weight="700" fill="#0b2147">payment-service :8083</text>
-    <text x="560" y="274" text-anchor="middle" fill="#0b2147">checkout saga orchestrator</text>
-    <text x="560" y="300" text-anchor="middle" fill="#555">POST /transactions/{id}/complete</text>
-    <text x="560" y="316" text-anchor="middle" fill="#555">(answers at the pivot with the receipt)</text>
+  <!-- ===== gateway ===== -->
+  <rect x="40" y="470" width="236" height="150" rx="12" fill="#000" stroke="#BDBDBD" stroke-width="1.75"/>
+  <g fill="none" stroke="#BDBDBD" stroke-width="3" stroke-linecap="round" transform="translate(60,488)">
+    <circle cx="20" cy="20" r="18"/>
+    <ellipse cx="20" cy="20" rx="8" ry="18"/>
+    <path d="M2,20 H38"/>
+  </g>
+  <text x="112" y="516" font-size="22" font-weight="700" fill="#F5F5F5">:8080</text>
+  <text x="60" y="560" font-size="22" font-weight="700" fill="#F5F5F5">checkout-gateway</text>
+  <text x="60" y="586" font-size="20" fill="#D6D6D6">routes public HTTP</text>
+  <text x="60" y="610" font-size="20" fill="#D6D6D6">/internal/* → 404</text>
 
-    <rect x="765" y="230" width="250" height="120" rx="8" fill="#e8f1ff" stroke="#3567b5" stroke-width="1.5"/>
-    <text x="890" y="254" text-anchor="middle" font-size="15" font-weight="700" fill="#0b2147">basket-service :8082</text>
-    <text x="890" y="274" text-anchor="middle" fill="#0b2147">baskets, catalog replica, scan outbox</text>
-    <text x="890" y="300" text-anchor="middle" fill="#555">POST /transactions, …/{id}/items</text>
-    <text x="890" y="316" text-anchor="middle" fill="#555">GET /transactions/{id}</text>
-
-    <rect x="1095" y="230" width="250" height="120" rx="8" fill="#e8f1ff" stroke="#3567b5" stroke-width="1.5"/>
-    <text x="1220" y="254" text-anchor="middle" font-size="15" font-weight="700" fill="#0b2147">analytics-service :8084</text>
-    <text x="1220" y="274" text-anchor="middle" fill="#0b2147">hopping-window popularity</text>
-    <text x="1220" y="300" text-anchor="middle" fill="#555">GET /analytics/popular-items</text>
+  <!-- ===== legend ===== -->
+  <rect x="40" y="664" width="236" height="210" rx="12" fill="#000" stroke="#484848" stroke-width="1.25"/>
+  <text x="60" y="698" font-size="22" font-weight="700" fill="#F5F5F5">Legend</text>
+  <g stroke-width="2.5" stroke-linecap="round" fill="none">
+    <path d="M60,724 H96" stroke="#2F80ED" marker-end="url(#arrow-blue)"/>
+    <path d="M60,756 H96" stroke="#FF7900" marker-end="url(#arrow-orange)"/>
+    <path d="M60,788 H96" stroke="#F5F5F5"/>
+    <path d="M60,820 H96" stroke="#F5F5F5" stroke-dasharray="8 9"/>
+    <path d="M60,852 H96" stroke="#BDBDBD" stroke-dasharray="8 9"/>
+  </g>
+  <g font-size="20" fill="#F5F5F5">
+    <text x="110" y="731">publish</text>
+    <text x="110" y="763">consume</text>
+    <text x="110" y="795">saga step</text>
+    <text x="110" y="827">event stream</text>
+    <text x="110" y="859">HTTP</text>
   </g>
 
-  <!-- private databases -->
-  <g font-size="11" fill="#3d2a05">
-    <g transform="translate(230,0)">
-      <path d="M-55,368 V408 A55,9 0 0 0 55,408 V368" fill="#fff6e0" stroke="#b58a35"/>
-      <ellipse cx="0" cy="368" rx="55" ry="9" fill="#fff6e0" stroke="#b58a35"/>
-      <text x="0" y="396" text-anchor="middle">inventory.sqlite</text>
-      <line x1="0" y1="350" x2="0" y2="359" stroke="#b58a35"/>
-    </g>
-    <g transform="translate(560,0)">
-      <path d="M-55,368 V408 A55,9 0 0 0 55,408 V368" fill="#fff6e0" stroke="#b58a35"/>
-      <ellipse cx="0" cy="368" rx="55" ry="9" fill="#fff6e0" stroke="#b58a35"/>
-      <text x="0" y="396" text-anchor="middle">payment.sqlite</text>
-      <line x1="0" y1="350" x2="0" y2="359" stroke="#b58a35"/>
-    </g>
-    <g transform="translate(890,0)">
-      <path d="M-55,368 V408 A55,9 0 0 0 55,408 V368" fill="#fff6e0" stroke="#b58a35"/>
-      <ellipse cx="0" cy="368" rx="55" ry="9" fill="#fff6e0" stroke="#b58a35"/>
-      <text x="0" y="396" text-anchor="middle">basket.sqlite</text>
-      <line x1="0" y1="350" x2="0" y2="359" stroke="#b58a35"/>
-    </g>
-    <g transform="translate(1220,0)">
-      <path d="M-55,368 V408 A55,9 0 0 0 55,408 V368" fill="#fff6e0" stroke="#b58a35"/>
-      <ellipse cx="0" cy="368" rx="55" ry="9" fill="#fff6e0" stroke="#b58a35"/>
-      <text x="0" y="396" text-anchor="middle">analytics.sqlite</text>
-      <line x1="0" y1="350" x2="0" y2="359" stroke="#b58a35"/>
-    </g>
+  <!-- ===== top services ===== -->
+  <rect x="340" y="156" width="1120" height="144" rx="12" fill="#000" stroke="#2F80ED" stroke-width="1.75"/>
+  <g fill="none" stroke="#2F80ED" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(364,176)">
+    <rect x="0" y="6" width="48" height="34" rx="5"/>
+    <path d="M0,16 H48 M8,30 H20"/>
+  </g>
+  <text x="428" y="200" font-size="26" font-weight="700" fill="#2F80ED">payment-service <tspan font-weight="400" fill="#F5F5F5">:8083</tspan></text>
+  <text x="428" y="234" font-size="20" fill="#F5F5F5">Checkout saga orchestrator · answers POST /transactions/{id}/complete at the pivot</text>
+  <use href="#icon-db" x="428" y="250" stroke="#D6D6D6"/>
+  <text x="462" y="270" font-size="20" fill="#D6D6D6">payment.sqlite · saga log and payments</text>
+
+  <rect x="1490" y="156" width="266" height="144" rx="12" fill="#000" stroke="#2F80ED" stroke-width="1.75"/>
+  <g fill="none" stroke="#2F80ED" stroke-width="3" stroke-linecap="round" transform="translate(1510,172)">
+    <path d="M2,40 H42 M8,36 V24 M18,36 V10 M28,36 V18 M38,36 V4"/>
+  </g>
+  <text x="1564" y="190" font-size="22" font-weight="700" fill="#F5F5F5">:8084</text>
+  <use href="#icon-db" x="1564" y="198" stroke="#D6D6D6" transform="translate(1564,198) scale(0.75) translate(-1564,-198)"/>
+  <text x="1590" y="214" font-size="20" fill="#D6D6D6">analytics.sqlite</text>
+  <text x="1510" y="250" font-size="22" font-weight="700" fill="#2F80ED">analytics-service</text>
+  <text x="1510" y="278" font-size="20" fill="#F5F5F5">GET …/popular-items</text>
+
+  <!-- ===== broker ===== -->
+  <rect x="316" y="370" width="1448" height="350" rx="20" fill="#000" stroke="#FF7900" stroke-width="1.75"/>
+  <g fill="none" stroke="#FF7900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(340,392)">
+    <rect x="0" y="6" width="48" height="34" rx="6"/>
+    <path d="M12,6 V40 M24,6 V40 M36,6 V40"/>
+  </g>
+  <text x="404" y="424" font-size="32" font-weight="700" fill="#FF7900">Kafka event broker</text>
+  <text x="716" y="422" font-size="20" fill="#F5F5F5">1 KRaft node in Docker · topics checkout.&lt;name&gt; · 1 partition each · acks=all</text>
+  <path d="M340,448 H1740" stroke="#484848" stroke-width="1.25"/>
+  <text x="694" y="484" text-anchor="middle" font-size="22" font-weight="700" fill="#D6D6D6">inventory.*</text>
+  <text x="1402" y="484" text-anchor="middle" font-size="22" font-weight="700" fill="#D6D6D6">basket.*</text>
+  <g stroke="#484848" stroke-width="1.25">
+    <path d="M576,500 V700 M812,500 V700 M1284,500 V700 M1520,500 V700"/>
+  </g>
+  <path d="M1048,462 V700" stroke="#7A7A7A" stroke-width="1.5"/>
+
+  <g text-anchor="middle" font-size="20">
+    <text x="458" y="530" font-size="24" font-weight="700" fill="#FF7900">commands</text>
+    <text x="458" y="558" fill="#D6D6D6">saga commands</text>
+    <text x="458" y="594" fill="#F5F5F5">Reserve</text>
+    <text x="458" y="620" fill="#F5F5F5">Cancel</text>
+
+    <text x="694" y="530" font-size="24" font-weight="700" fill="#FF7900">events</text>
+    <text x="694" y="558" fill="#D6D6D6">saga replies</text>
+    <text x="694" y="594" fill="#F5F5F5">StockReserved</text>
+    <text x="694" y="620" fill="#F5F5F5">StockRejected</text>
+    <text x="694" y="646" fill="#F5F5F5">ReservationCancelled</text>
+
+    <text x="930" y="530" font-size="24" font-weight="700" fill="#FF7900">catalog</text>
+    <text x="930" y="558" fill="#D6D6D6">state · compacted</text>
+    <text x="930" y="594" fill="#F5F5F5">CatalogPublished</text>
+
+    <text x="1166" y="530" font-size="24" font-weight="700" fill="#FF7900">commands</text>
+    <text x="1166" y="558" fill="#D6D6D6">saga commands</text>
+    <text x="1166" y="594" fill="#F5F5F5">Checkout</text>
+    <text x="1166" y="620" fill="#F5F5F5">Release</text>
+    <text x="1166" y="646" fill="#F5F5F5">Complete</text>
+
+    <text x="1402" y="530" font-size="24" font-weight="700" fill="#FF7900">events</text>
+    <text x="1402" y="558" fill="#D6D6D6">saga replies</text>
+    <text x="1402" y="594" fill="#F5F5F5">BasketLocked</text>
+    <text x="1402" y="620" fill="#F5F5F5">BasketReleased</text>
+    <text x="1402" y="646" fill="#F5F5F5">BasketCompleted</text>
+    <text x="1402" y="672" fill="#F5F5F5">+ 3 rejections</text>
+
+    <text x="1638" y="530" font-size="24" font-weight="700" fill="#FF7900">scans</text>
+    <text x="1638" y="558" fill="#D6D6D6">event stream</text>
+    <text x="1638" y="594" fill="#F5F5F5">ItemScanned</text>
+    <text x="1638" y="620" fill="#F5F5F5">from the outbox,</text>
+    <text x="1638" y="646" fill="#F5F5F5">by sequence</text>
   </g>
 
-  <!-- legend -->
-  <g font-size="12" fill="#222">
-    <rect x="1385" y="230" width="320" height="190" rx="6" fill="#fafafa" stroke="#ccc"/>
-    <text x="1400" y="252" font-size="13" font-weight="700">Legend</text>
-    <line x1="1400" y1="274" x2="1450" y2="274" stroke="#d9822b" stroke-width="2.4" marker-end="url(#a-cmd)"/>
-    <text x="1460" y="278">saga command (from payment)</text>
-    <line x1="1400" y1="298" x2="1450" y2="298" stroke="#3567b5" stroke-width="2.4" marker-end="url(#a-evt)"/>
-    <text x="1460" y="302">reply event (to payment)</text>
-    <line x1="1400" y1="322" x2="1450" y2="322" stroke="#2f9e44" stroke-width="2.4" stroke-dasharray="7 4" marker-end="url(#a-str)"/>
-    <text x="1460" y="326">event stream (choreography)</text>
-    <text x="1400" y="352">Arrow into a topic = publish;</text>
-    <text x="1400" y="368">arrow into a service = consume.</text>
-    <text x="1400" y="392">Services call each other only via Kafka;</text>
-    <text x="1400" y="408">each database is opened by one service.</text>
+  <!-- ===== bottom services ===== -->
+  <rect x="340" y="790" width="640" height="156" rx="12" fill="#000" stroke="#2F80ED" stroke-width="1.75"/>
+  <g fill="none" stroke="#2F80ED" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(364,810)">
+    <path d="M24,2 L46,13 V37 L24,48 L2,37 V13 Z M2,13 L24,24 L46,13 M24,24 V48"/>
   </g>
+  <text x="428" y="834" font-size="26" font-weight="700" fill="#2F80ED">inventory-service <tspan font-weight="400" fill="#F5F5F5">:8081</tspan></text>
+  <text x="428" y="866" font-size="20" fill="#F5F5F5">Stock, reservations · GET /items, /inventory/low-stock</text>
+  <use href="#icon-db" x="428" y="882" stroke="#D6D6D6"/>
+  <text x="462" y="902" font-size="20" fill="#D6D6D6">inventory.sqlite</text>
 
-  <!-- broker -->
-  <rect x="40" y="452" width="1665" height="392" rx="10" fill="#f6fbf6" stroke="#3a9a3a" stroke-width="1.5"/>
-  <text x="1180" y="476" font-size="15" font-weight="700" fill="#0d330d">Apache Kafka 4.3 event broker</text>
-  <text x="1180" y="496" font-size="11" fill="#2b4d2b">1 KRaft node in Docker · topics checkout.&lt;name&gt; · 1 partition each</text>
-
-  <g font-size="12">
-    <rect x="60" y="510" width="1625" height="40" rx="4" fill="#fff1e0" stroke="#d9822b"/>
-    <text x="1180" y="527" font-family="Menlo, Consolas, monospace" font-size="13" font-weight="700" fill="#6b3a05">inventory.commands</text>
-    <text x="1180" y="543" fill="#6b3a05">Reserve · Cancel</text>
-
-    <rect x="60" y="565" width="1625" height="40" rx="4" fill="#e8f1ff" stroke="#3567b5"/>
-    <text x="1180" y="582" font-family="Menlo, Consolas, monospace" font-size="13" font-weight="700" fill="#0b2147">inventory.events</text>
-    <text x="1180" y="598" fill="#0b2147">StockReserved · StockRejected · ReservationCancelled</text>
-
-    <rect x="60" y="620" width="1625" height="40" rx="4" fill="#eafbea" stroke="#2f9e44"/>
-    <text x="1180" y="637" font-family="Menlo, Consolas, monospace" font-size="13" font-weight="700" fill="#0d330d">inventory.catalog</text>
-    <text x="1180" y="653" fill="#0d330d">CatalogPublished (compacted, at startup)</text>
-
-    <rect x="60" y="675" width="1625" height="40" rx="4" fill="#fff1e0" stroke="#d9822b"/>
-    <text x="1180" y="692" font-family="Menlo, Consolas, monospace" font-size="13" font-weight="700" fill="#6b3a05">basket.commands</text>
-    <text x="1180" y="708" fill="#6b3a05">Checkout · Release · Complete</text>
-
-    <rect x="60" y="730" width="1625" height="40" rx="4" fill="#e8f1ff" stroke="#3567b5"/>
-    <text x="1180" y="747" font-family="Menlo, Consolas, monospace" font-size="13" font-weight="700" fill="#0b2147">basket.events</text>
-    <text x="1180" y="763" fill="#0b2147">BasketLocked · BasketReleased · BasketCompleted · *Rejected</text>
-
-    <rect x="60" y="785" width="1625" height="40" rx="4" fill="#eafbea" stroke="#2f9e44"/>
-    <text x="1180" y="802" font-family="Menlo, Consolas, monospace" font-size="13" font-weight="700" fill="#0d330d">basket.scans</text>
-    <text x="1180" y="818" fill="#0d330d">ItemScanned (relayed from the outbox, by sequence)</text>
+  <rect x="1010" y="790" width="746" height="156" rx="12" fill="#000" stroke="#2F80ED" stroke-width="1.75"/>
+  <g fill="none" stroke="#2F80ED" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(1034,810)">
+    <path d="M2,6 H10 L16,34 H40 L46,14 H13"/>
+    <circle cx="20" cy="42" r="3"/><circle cx="36" cy="42" r="3"/>
   </g>
+  <text x="1098" y="834" font-size="26" font-weight="700" fill="#2F80ED">basket-service <tspan font-weight="400" fill="#F5F5F5">:8082</tspan></text>
+  <text x="1098" y="864" font-size="20" fill="#F5F5F5">Baskets, catalog replica, scan outbox + relay</text>
+  <text x="1098" y="892" font-size="20" fill="#F5F5F5">POST /transactions, …/{id}/items · GET /transactions/{id}</text>
+  <use href="#icon-db" x="1098" y="904" stroke="#D6D6D6"/>
+  <text x="1132" y="924" font-size="20" fill="#D6D6D6">basket.sqlite</text>
 
-  <!-- publish / consume arrows (drawn over the lanes) -->
-  <g stroke-width="2.4" fill="none">
-    <!-- inventory -->
-    <line x1="130" y1="510" x2="130" y2="352" stroke="#d9822b" marker-end="url(#a-cmd)"/>
-    <line x1="155" y1="350" x2="155" y2="563" stroke="#3567b5" marker-end="url(#a-evt)"/>
-    <line x1="305" y1="350" x2="305" y2="618" stroke="#2f9e44" stroke-dasharray="7 4" marker-end="url(#a-str)"/>
-    <!-- payment -->
-    <line x1="460" y1="350" x2="460" y2="508" stroke="#d9822b" marker-end="url(#a-cmd)"/>
-    <line x1="485" y1="565" x2="485" y2="352" stroke="#3567b5" marker-end="url(#a-evt)"/>
-    <line x1="635" y1="350" x2="635" y2="673" stroke="#d9822b" marker-end="url(#a-cmd)"/>
-    <line x1="660" y1="730" x2="660" y2="352" stroke="#3567b5" marker-end="url(#a-evt)"/>
-    <!-- basket -->
-    <line x1="790" y1="620" x2="790" y2="352" stroke="#2f9e44" stroke-dasharray="7 4" marker-end="url(#a-str)"/>
-    <line x1="815" y1="675" x2="815" y2="352" stroke="#d9822b" marker-end="url(#a-cmd)"/>
-    <line x1="965" y1="350" x2="965" y2="728" stroke="#3567b5" marker-end="url(#a-evt)"/>
-    <line x1="990" y1="350" x2="990" y2="783" stroke="#2f9e44" stroke-dasharray="7 4" marker-end="url(#a-str)"/>
-    <!-- analytics -->
-    <line x1="1145" y1="785" x2="1145" y2="352" stroke="#2f9e44" stroke-dasharray="7 4" marker-end="url(#a-str)"/>
+  <!-- ===== insight strip ===== -->
+  <rect x="40" y="992" width="1716" height="88" rx="16" fill="#000" stroke="#BDBDBD" stroke-width="1.75"/>
+  <circle cx="92" cy="1036" r="26" fill="none" stroke="#FF7900" stroke-width="2.5"/>
+  <g fill="none" stroke="#FF7900" stroke-width="3" stroke-linecap="round" transform="translate(76,1022)">
+    <rect x="0" y="4" width="32" height="22" rx="4"/>
+    <path d="M10,4 V26 M21,4 V26"/>
   </g>
-  <g>
-    <circle cx="130" cy="530" r="4" fill="#d9822b"/>
-    <circle cx="155" cy="585" r="4" fill="#3567b5"/>
-    <circle cx="305" cy="640" r="4" fill="#2f9e44"/>
-    <circle cx="460" cy="530" r="4" fill="#d9822b"/>
-    <circle cx="485" cy="585" r="4" fill="#3567b5"/>
-    <circle cx="635" cy="695" r="4" fill="#d9822b"/>
-    <circle cx="660" cy="750" r="4" fill="#3567b5"/>
-    <circle cx="790" cy="640" r="4" fill="#2f9e44"/>
-    <circle cx="815" cy="695" r="4" fill="#d9822b"/>
-    <circle cx="965" cy="750" r="4" fill="#3567b5"/>
-    <circle cx="990" cy="805" r="4" fill="#2f9e44"/>
-    <circle cx="1145" cy="805" r="4" fill="#2f9e44"/>
-  </g>
-  <g font-size="11" fill="#333">
-    <text x="60" y="866">Checkout saga: payment → Checkout → basket → BasketLocked → payment → Reserve → inventory → StockReserved → payment (pivot: payment recorded, HTTP 200 receipt) → Complete → basket → BasketCompleted → payment.</text>
-    <text x="60" y="884">Rejections roll back with Release (and Cancel during recovery). Scans: basket commits line + outbox row in one transaction, the scan is acknowledged, and the relay publishes ItemScanned in order.</text>
+  <text x="136" y="1044" font-size="24" font-weight="700" fill="#F5F5F5">Services know only topics</text>
+  <path d="M480,1008 V1064" stroke="#484848" stroke-width="1.25"/>
+  <text x="508" y="1030" font-size="20" fill="#F5F5F5">The payment saga runs on commands and replies; the catalog and scans flow as event streams.</text>
+  <text x="508" y="1058" font-size="20" fill="#F5F5F5">A service that is down does not fail its callers: its events wait in Kafka until it returns.</text>
   </g>
 </svg>
