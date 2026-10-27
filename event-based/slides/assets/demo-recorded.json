@@ -1,0 +1,196 @@
+{
+  "recordedAt": "2026-10-27T05:07:14.402Z",
+  "base": "http://localhost:8080",
+  "results": [
+    {
+      "id": "start",
+      "method": "POST",
+      "path": "/transactions",
+      "status": 201,
+      "ms": 45.26,
+      "body": {
+        "itemCount": 0,
+        "runningTotal": 0,
+        "startedAt": "2026-10-27T05:07:14.138Z",
+        "stationId": "station-7",
+        "status": "OPEN",
+        "transactionId": "tx-1"
+      }
+    },
+    {
+      "id": "scan-1",
+      "method": "POST",
+      "path": "/transactions/tx-1/items",
+      "status": 200,
+      "ms": 2.74,
+      "body": {
+        "itemCount": 1,
+        "name": "Item 2",
+        "runningTotal": 1.2,
+        "sku": "SKU-000002",
+        "transactionId": "tx-1",
+        "unitPrice": 1.2
+      }
+    },
+    {
+      "id": "scan-2",
+      "method": "POST",
+      "path": "/transactions/tx-1/items",
+      "status": 200,
+      "ms": 1.47,
+      "body": {
+        "itemCount": 2,
+        "name": "Item 3",
+        "runningTotal": 2.75,
+        "sku": "SKU-000003",
+        "transactionId": "tx-1",
+        "unitPrice": 1.55
+      }
+    },
+    {
+      "id": "scan-3",
+      "method": "POST",
+      "path": "/transactions/tx-1/items",
+      "status": 200,
+      "ms": 1.28,
+      "body": {
+        "itemCount": 3,
+        "name": "Item 2",
+        "runningTotal": 3.95,
+        "sku": "SKU-000002",
+        "transactionId": "tx-1",
+        "unitPrice": 1.2
+      }
+    },
+    {
+      "id": "complete",
+      "method": "POST",
+      "path": "/transactions/tx-1/complete",
+      "status": 200,
+      "ms": 16.63,
+      "body": {
+        "completedAt": "2026-10-27T05:07:14.164Z",
+        "itemCount": 3,
+        "lines": [
+          {
+            "name": "Item 2",
+            "quantity": 2,
+            "sku": "SKU-000002",
+            "unitPrice": 1.2
+          },
+          {
+            "name": "Item 3",
+            "quantity": 1,
+            "sku": "SKU-000003",
+            "unitPrice": 1.55
+          }
+        ],
+        "startedAt": "2026-10-27T05:07:14.138Z",
+        "stationId": "station-7",
+        "totalAmount": 3.95,
+        "transactionId": "tx-1"
+      }
+    },
+    {
+      "id": "status",
+      "method": "GET",
+      "path": "/transactions/tx-1",
+      "status": 200,
+      "ms": 0.98,
+      "body": {
+        "itemCount": 3,
+        "runningTotal": 3.95,
+        "startedAt": "2026-10-27T05:07:14.138Z",
+        "stationId": "station-7",
+        "status": "OPEN",
+        "transactionId": "tx-1"
+      }
+    },
+    {
+      "id": "burst",
+      "method": "POST",
+      "path": "/transactions/tx-2/items × 600",
+      "status": 200,
+      "ms": 124.69,
+      "body": {
+        "transactionId": "tx-2",
+        "scans": 600,
+        "failed": 0,
+        "scansPerSecond": 4812
+      }
+    },
+    {
+      "id": "popular",
+      "method": "GET",
+      "path": "/analytics/popular-items?limit=5",
+      "status": 200,
+      "ms": 109.13,
+      "body": {
+        "computedAt": "2026-10-27T05:07:14.285Z",
+        "items": [
+          {
+            "name": "Item 5",
+            "rank": 1,
+            "scanCount": 249,
+            "sku": "SKU-000005"
+          },
+          {
+            "name": "Item 7",
+            "rank": 2,
+            "scanCount": 124,
+            "sku": "SKU-000007"
+          },
+          {
+            "name": "Item 11",
+            "rank": 3,
+            "scanCount": 42,
+            "sku": "SKU-000011"
+          },
+          {
+            "name": "Item 13",
+            "rank": 4,
+            "scanCount": 41,
+            "sku": "SKU-000013"
+          },
+          {
+            "name": "Item 17",
+            "rank": 5,
+            "scanCount": 41,
+            "sku": "SKU-000017"
+          }
+        ],
+        "slideInterval": 500,
+        "windowEnd": 500,
+        "windowSize": 1000,
+        "windowStart": 1
+      }
+    },
+    {
+      "id": "low",
+      "method": "GET",
+      "path": "/inventory/low-stock?threshold=10000",
+      "status": 200,
+      "ms": 1.42,
+      "body": {
+        "alerts": [
+          {
+            "currentStock": 9998,
+            "name": "Item 2",
+            "sku": "SKU-000002",
+            "threshold": 10000,
+            "triggeredAt": "2026-10-27T05:07:14.162Z"
+          },
+          {
+            "currentStock": 9999,
+            "name": "Item 3",
+            "sku": "SKU-000003",
+            "threshold": 10000,
+            "triggeredAt": "2026-10-27T05:07:14.162Z"
+          }
+        ],
+        "generatedAt": "2026-10-27T05:07:14.401Z",
+        "threshold": 10000
+      }
+    }
+  ]
+}

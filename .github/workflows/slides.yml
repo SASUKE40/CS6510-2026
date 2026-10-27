@@ -1,0 +1,52 @@
+name: Walkthrough slides
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - event-based/slides/**
+      - .github/workflows/slides.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: event-based/slides
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: event-based/slides/package.json
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: event-based/slides/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build --base /${{ github.event.repository.name }}/
+      # Pages has no SPA rewrite; serve the app for deep links such as /12.
+      - run: cp dist/index.html dist/404.html
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: event-based/slides/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
